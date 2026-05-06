@@ -1,0 +1,277 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix cco: <https://www.commoncoreontologies.org/> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix tb21: <http://www.opengis.net/ont/tb21/> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.opengis.net/ont/tb21/coord> rdf:type owl:Ontology ;
+    dcterms:title "Components for Coordinates and Coordinate Reference Systems based on CCO"@en ;
+    owl:imports <http://purl.obolibrary.org/obo/bfo> ;
+    owl:imports <http://www.opengis.net/ont/tb21/geosparql> ;
+    owl:imports <https://www.commoncoreontologies.org/GeospatialOntology> ;
+    dcterms:created "2026-04-02"^^xsd:date ;
+    dcterms:modified "2026-04-28"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0002-3884-3420> ;
+    rdfs:comment """
+    Components for OGC TB21 Metadata. 
+
+    This file is an example ontology artifact prepared solely for OGC Testbed 21 reporting and demonstration activities. 
+    It is based on a point in time developmental ontology slim and is not an official NGA, GMSB, or IDO ontology release. 
+    The IRIs, labels, definitions, axioms, and module structure in this file should not be treated as authoritative, stable, reusable, or suitable for incorporation into OGC baseline standards, operational systems, or future testbed activities. 
+    
+    Future work should reference officially published GMSB IDO releases when they become available.
+    """@en .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.opengis.net/ont/tb21/hasAxisMapping
+tb21:hasAxisMapping rdf:type owl:ObjectProperty ;
+             rdfs:domain tb21:CRS ;
+             rdfs:range tb21:Axis ;
+             rdfs:label "has axis mapping"@en ;
+             skos:definition "c has axis mapping a if c is a coordinate reference system and a is an axis mapping partially or completely defining c" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/coord> .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.opengis.net/ont/tb21/hasValue
+tb21:hasValue
+             rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:label "has value"@en ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/coord> .
+
+
+###  http://www.opengis.net/ont/tb21/hasXvalue
+tb21:hasXvalue
+             rdf:type owl:DatatypeProperty ;
+            #  rdfs:domain [ owl:intersectionOf ( tb21:Coord
+            #                                     [ rdf:type owl:Restriction ;
+            #                                       owl:onProperty cco:ont00001912 ;
+            #                                       owl:someValuesFrom tb21:CartesianCRS
+            #                                     ]
+            #                                   ) ;
+            #                rdf:type owl:Class
+            #              ] ;
+             rdfs:domain tb21:Coord ;
+             rdfs:label "has x axis value"@en ;
+             skos:definition "relates a Cartesian coordinate to it's x value" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/coord> .
+
+###  http://www.opengis.net/ont/tb21/hasZvalue
+tb21:hasZvalue
+             rdf:type owl:DatatypeProperty ;
+            #  rdfs:domain [ owl:intersectionOf ( tb21:Coord
+            #                                     [ rdf:type owl:Restriction ;
+            #                                       owl:onProperty cco:ont00001912 ;
+            #                                       owl:someValuesFrom tb21:CartesianCRS
+            #                                     ]
+            #                                   ) ;
+            #                rdf:type owl:Class
+            #              ] ;
+             rdfs:domain tb21:Coord ;
+             rdfs:label "has z axis value"@en ;
+             skos:definition "relates a Cartesian coordinate to it's z value" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/coord> .
+
+###  http://www.opengis.net/ont/tb21/hasYvalue
+tb21:hasYvalue
+             rdf:type owl:DatatypeProperty ;
+            #  rdfs:domain [ owl:intersectionOf ( tb21:Coord
+            #                                     [ rdf:type owl:Restriction ;
+            #                                       owl:onProperty cco:ont00001912 ;
+            #                                       owl:someValuesFrom tb21:CartesianCRS
+            #                                     ]
+            #                                   ) ;
+            #                rdf:type owl:Class
+            #              ] ;
+             rdfs:domain tb21:Coord ;
+             rdfs:label "has y axis value"@en ;
+             skos:definition "relates a Cartesian coordinate to it's y value" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/coord> .
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.opengis.net/ont/tb21/ValueSpec
+tb21:ValueSpec rdf:type owl:Class ;
+                rdfs:subClassOf cco:ont00000958 ;
+                rdfs:comment """Can't figure out if they are descriptive or designative or even prescriptive some times.
+
+An example of descriptive might be a measurement, if we consider to be describing some entity by it's quality, such as a value specification of 10 meters describing a piece of wood. Or the same value specification could be designating a quality. Or, as part of instructions, it could be prescriptive.
+
+Probably sort this out by choose how to relate the value specification to its target and letting it autoclassify at an instance level.""" ;
+                rdfs:label "value specification"@en ;
+                skos:definition "An information content entity that specifies a value within a classification scheme or on a quantitative scale." ;
+                cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+###  http://www.opengis.net/ont/tb21/Coord
+tb21:Coord
+             rdf:type owl:Class ;
+             rdfs:subClassOf tb21:ValueSpec ;
+             rdfs:label "coordinate"@en ;
+             skos:definition "a value specification consisting of one or more values, typically with an order, each of which is taken from an (typically) ordered set and which together designate or describe some thing as prescribed by a coordinate reference system" ;
+             skos:scopeNote """The singular \"coordinate\" is here used to what might be called a coordinate tuple, except we don't require that the coordinate is a tuple, just that it can have one or more values that might be named rather than ordered.
+
+We don't define coordinate as in one of the things in a tuple, because such a thing isn't about anything on its own. When we have informations structure entities we can define them there, but in any cases coordinates in this sense are always going to be literals.""" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+###  http://www.opengis.net/ont/tb21/GeoCoord
+tb21:GeoCoord
+             rdf:type owl:Class ;
+            owl:equivalentClass [ rdf:type owl:Restriction ;
+                                  owl:onProperty <https://www.commoncoreontologies.org/ont00001912> ;
+                                  owl:someValuesFrom <https://www.commoncoreontologies.org/ont00000469>
+                                ] ;
+              rdfs:subClassOf tb21:Coord ;
+              rdfs:label "geocoordinate"@en ;
+              skos:definition "a spatial coordinate designating a position on or near a astronomical body" ;
+              skos:scopeNote "Here an elsewhere the prefix \"geo\" is generalized to refer to a astronomical body. The reference body relation specifies what astronomical body the coordinate is relative to" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/coord> .
+
+
+
+###  http://www.opengis.net/ont/tb21/coord
+tb21:CRS
+             rdf:type owl:Class ;
+             rdfs:subClassOf cco:ont00000965 ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty tb21:hasAxisMapping ;
+                               owl:someValuesFrom tb21:Axis
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty tb21:hasAxisMapping ;
+                               owl:allValuesFrom tb21:Axis
+                             ] ;
+             rdfs:label "coordinate reference system"@en ;
+             skos:definition "A directive information content entity that prescribes coordinates to parts of some entity" ;
+             skos:scopeNote """https://isotc211.geolexica.org/concepts/703/ says a coordinate system is related to an object by a datum
+
+I've found the terminology to be used inconsistenly, so I use more precise terminology here as primary label and include as alt labels terms used in the wild""" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/coord> .
+
+###  http://www.opengis.net/ont/tb21/CartesianCRS
+tb21:CartesianCRS
+             rdf:type owl:Class ;
+             owl:equivalentClass [ owl:intersectionOf ( tb21:CRS
+                                                        [ rdf:type owl:Restriction ;
+                                                          owl:onProperty tb21:hasAxisMapping ;
+                                                          owl:allValuesFrom tb21:CartesianAxis
+                                                        ]
+                                                      ) ;
+                                   rdf:type owl:Class
+                                 ] ;
+             rdfs:subClassOf tb21:CRS ;
+             rdfs:label "cartesian coordinate reference system"@en ;
+             skos:definition "a spatial coordinate system whose coordinates of a fiat point are specified as the distance of the origin to the point closest to the specified point on spatial lines specified as axes that are orthogonal and pass through the origin point"@en ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/coord> .
+
+###  http://www.opengis.net/ont/tb21/_2DCartesianCRS
+tb21:_2DCartesianCRS rdf:type owl:Class ;
+             owl:equivalentClass [ owl:intersectionOf ( [ rdf:type owl:Class ;
+                                                          owl:complementOf [ rdf:type owl:Restriction ;
+                                                                             owl:onProperty tb21:hasAxisMapping ;
+                                                                             owl:someValuesFrom tb21:Zaxis
+                                                                           ]
+                                                        ]
+                                                        [ rdf:type owl:Restriction ;
+                                                          owl:onProperty tb21:hasAxisMapping ;
+                                                          owl:someValuesFrom tb21:Xaxis
+                                                        ]
+                                                        [ rdf:type owl:Restriction ;
+                                                          owl:onProperty tb21:hasAxisMapping ;
+                                                          owl:someValuesFrom tb21:Yaxis
+                                                        ]
+                                                      ) ;
+                                   rdf:type owl:Class
+                                 ] ;
+             rdfs:subClassOf tb21:CartesianCRS ;
+             rdfs:label "2-dimensional cartesian coordinate reference system"@en ;
+             skos:definition "a 'cartesian spatial coordinate reference system' whose coordinates are specified relative to two fiat lines"@en ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/coord> .
+
+###  http://www.opengis.net/ont/tb21/RasterCRS
+tb21:RasterCRS
+						 rdf:type owl:Class ;
+             rdfs:subClassOf tb21:_2DCartesianCRS ;
+             rdfs:label "raster image coordinate reference system"@en ;
+             skos:definition "a spatial coordinate reference system that prescribes coordinates of elements of of a two dimensional raster structure" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/coord> .
+
+###  http://www.opengis.net/ont/tb21/Axis
+tb21:Axis
+             rdf:type owl:Class ;
+             rdfs:subClassOf cco:ont00000965 ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty cco:ont00001942 ;
+                               owl:someValuesFrom obo:BFO_0000142
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty 
+                               [ owl:inverseOf tb21:hasAxisMapping ] ;
+                               owl:allValuesFrom tb21:CRS
+                             ] ;
+             rdfs:label "coordinate reference system component mapping"@en ;
+             skos:altLabel "axis" ;
+             skos:definition "a directive information content entity, part of a coordinate reference system, that prescribes how to map a coordinate component, specified as in some unit, to positions on the entity, sometimes defining named directions along the component" ;
+             skos:scopeNote """The components of a coordinate reference system such as in ISO 19111 are labeled axis ambiguously. On the one hand axis to describes one dimension of a multi-component coordinate, namely something on the side of the coordinate, and on the other hand, in the case that the component maps to a line relative to the entity, it's used to mean that line.
+
+Not all components correspond to lines. We use the term axis to mean the line on the side of the space the entity inhabits, and component to mean the thing on the side of the coordinate.""" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/coord> .
+
+###  http://www.opengis.net/ont/tb21/GeoCoord
+tb21:CartesianAxis rdf:type owl:Class ;
+             rdfs:subClassOf tb21:Axis ;
+             rdfs:label "cartesian coordinate component axis mapping"@en ;
+             skos:definition "a spatial axis specification that is part of a spatial cartesian coordinate reference system and designates a spatial line orthogonal to others that a geospatial cartesian axis specification specifies"@en ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/coord> .
+
+
+###  http://www.opengis.net/ont/tb21/Xaxis
+tb21:Xaxis rdf:type owl:Class ;
+             rdfs:subClassOf tb21:CartesianAxis ;
+             rdfs:label "x axis mapping"@en ;
+             skos:altLabel "easting" ;
+             skos:definition "one of a set of geospatial cartesian coordinate axis specifications that are used by a geospatial cartesian coordinate reference system and which, when a coordinate is represented as an ordered list, is the first coordinate specified."@en ;
+             skos:scopeNote "The designation as 'x' as axis name is arbitrary."@en ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/coord> .
+
+
+###  http://www.opengis.net/ont/tb21/Yaxis
+tb21:Yaxis rdf:type owl:Class ;
+             rdfs:subClassOf tb21:CartesianAxis ;
+             rdfs:label "y axis mapping"@en ;
+             skos:altLabel "northing" ;
+             skos:definition "one of a set of geospatial cartesian coordinate axis specifications that are used by a geospatial cartesian coordinate reference system and which, when a coordinate is represented as an ordered list, is the second coordinate specified."@en ;
+             skos:scopeNote "The designation as 'y' as axis name is arbitrary."@en ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/coord> .
+
+
+###  http://www.opengis.net/ont/tb21/Zaxis
+tb21:Zaxis rdf:type owl:Class ;
+             rdfs:subClassOf tb21:CartesianAxis ;
+             rdfs:label "z axis mapping"@en ;
+             skos:definition "The designation as 'z' as axis name is arbitrary."@en ,
+                             "one of a set of geospatial cartesian coordinate axis specifications that are used by a geospatial cartesian coordinate reference system and which, when a coordinate is represented as an ordered list, is the third coordinate specified."@en ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/coord> .
+
+
+#################################################################
+#    Individuals
+#################################################################
+

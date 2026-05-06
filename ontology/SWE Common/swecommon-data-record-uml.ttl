@@ -1,0 +1,1366 @@
+# baseURI: http://www.opengis.net/ont/swe/
+# imports: http://purl.org/dc/elements/1.1/
+# imports: http://qudt.org/$$QUDT_VERSION$$/schema/qudt
+# imports: http://www.opengis.net/ont/geosparql#
+# imports: http://www.w3.org/2004/02/skos/core
+# prefix: swe
+
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix geosparql: <http://www.opengis.net/ont/geosparql#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix swe: <http://www.opengis.net/ont/swe/> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+swe:
+  a owl:Ontology ;
+  dcterms:created "2026-02-24"^^xsd:date ;
+  dcterms:creator <https://orcid.org/0000-0002-3884-3420> ;
+  dcterms:description "Explicit OWL2 implementation of SWE Common Record Object schema" ;
+  dcterms:isVersionOf <https://docs.ogc.org/is/24-014/24-014.html> ;
+  dcterms:modified "2026-03-19"^^xsd:date ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html"^^xsd:anyURI ;
+  dcterms:title "SWE Common Record Object Ontology" ;
+  rdfs:comment """This ontology is an attempt to directly translate the SWE Common Record Object schema. 
+  It is based on the UML model of the SWE Common Record Object schema, which is available at https://docs.ogc.org/is/24-014/24-014.html. 
+  
+  Class and property names (local names) match UML class and property names exactly except for the swe:valueObject ObjectProperty that complements swe:value DatatypeProperty.
+  
+  The ontology was created manually.""" ;
+  owl:imports <http://purl.org/dc/elements/1.1/> ;
+  owl:imports <http://qudt.org/$$QUDT_VERSION$$/schema/qudt> ;
+  owl:imports geosparql: ;
+  owl:imports <http://www.w3.org/2004/02/skos/core> ;
+.
+swe:AbstractDataComponent
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_record_components> ;
+  rdfs:label "AbstractDataComponent" ;
+  rdfs:subClassOf swe:AbstractSWEIdentifiable ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:ScopedName ;
+      owl:onProperty swe:definition ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:definition ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:optional ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:updatable ;
+    ] ;
+.
+swe:AbstractEncoding
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_dataarray_class> ;
+  rdfs:label "AbstracEncoding" ;
+.
+swe:AbstractSWEIdentifiable
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_alldatacomponents> ;
+  rdfs:label "AbstractSWEIdentifiable" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:description ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:id ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:label ;
+    ] ;
+.
+swe:AbstractSimpleComponent
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_simplecomponents> ;
+  rdfs:label "AbstractSimpleComponent" ;
+  rdfs:subClassOf swe:AbstractDataComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:NilValues ;
+      owl:onProperty swe:nilValues ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:Quality ;
+      owl:onProperty swe:quality ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:axisID ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:nilValues ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:quality ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:referenceFrame ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+.
+swe:AllowedGeometries
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_geometry_class> ;
+  rdfs:label "AllowedGeometries" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:geomType ;
+    ] ;
+.
+swe:AllowedTimes
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_allowedtimes_class> ;
+  rdfs:label "AllowedTimes" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:TimePair ;
+      owl:onProperty swe:interval ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:positiveInteger ;
+      owl:onProperty swe:significantFigures ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:significantFigures ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:interval ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:valueObject ;
+    ] ;
+.
+swe:AllowedTokens
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_allowedtokens_class> ;
+  rdfs:label "AllowedTokens" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:string ;
+      owl:onProperty swe:pattern ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:string ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:pattern ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+.
+swe:AllowedValues
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_allowedvalues_class> ;
+  rdfs:label "AllowedValues" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:Real ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:RealPair ;
+      owl:onProperty swe:interval ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:integer ;
+      owl:onProperty swe:significantFigures ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:significantFigures ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:interval ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+.
+swe:AnyNumerical
+  a owl:Class ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#_b34a59af-d7b7-40a4-9e27-10c1eeb08bb1" ;
+  rdfs:label "AnyNumerical" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:Count ;
+      owl:onProperty swe:byCount ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:Quantity ;
+      owl:onProperty swe:byQuantity ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:Time ;
+      owl:onProperty swe:byTime ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:bySomething ;
+    ] ;
+  skos:definition "Instances of this class should take one of byCount, byQuantity, byTime, which are sub-properties of bySomething" ;
+.
+swe:AnyRange
+  a owl:Class ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#_b34a59af-d7b7-40a4-9e27-10c1eeb08bb1" ;
+  rdfs:label "AnyRange" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:CategoryRange ;
+      owl:onProperty swe:byCategoryRange ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:CountRange ;
+      owl:onProperty swe:byCountRange ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:QuantityRange ;
+      owl:onProperty swe:byQuantityRange ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:TimeRange ;
+      owl:onProperty swe:byTimeRange ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:bySomething ;
+    ] ;
+  skos:definition "Instances of this class should take one of byCountRange, byQuantityRange, byTimeRange, byCategoryRange, which are sub-properties of bySomething" ;
+.
+swe:AnyScalar
+  a owl:Class ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#_b34a59af-d7b7-40a4-9e27-10c1eeb08bb1" ;
+  rdfs:label "AnyScalar" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:bySomething ;
+    ] ;
+  skos:definition "Instances of this class should take one of byBoolean, byCount, byQuantity, byTime, byCategory, byText, which are sub-properties of bySomething" ;
+.
+swe:Boolean
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_boolean_class> ;
+  rdfs:label "Boolean" ;
+  rdfs:subClassOf swe:AbstractSimpleComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:boolean ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+.
+swe:Category
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_category_class> ;
+  rdfs:label "Category" ;
+  rdfs:subClassOf swe:AbstractSimpleComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AllowedTokens ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:string ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:codeSpace ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+.
+swe:CategoryRange
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_categoryrange_class> ;
+  rdfs:label "CategoryRange" ;
+  rdfs:subClassOf swe:AbstractSimpleComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AllowedTokens ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:TokenPair ;
+      owl:onProperty swe:valueObject ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:codeSpace ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:valueObject ;
+    ] ;
+.
+swe:Count
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_count_class> ;
+  rdfs:label "Count" ;
+  rdfs:subClassOf swe:AbstractSimpleComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AllowedValues ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:integer ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+.
+swe:CountRange
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_countrange_class> ;
+  rdfs:label "CountRange" ;
+  rdfs:subClassOf swe:AbstractSimpleComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AllowedValues ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:IntegerPair ;
+      owl:onProperty swe:valueObject ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:valueObject ;
+    ] ;
+.
+swe:DataArray
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_dataarray_class> ;
+  rdfs:label "DataArray" ;
+  rdfs:subClassOf swe:AbstractDataComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AbstractDataComponent ;
+      owl:onProperty swe:elementType ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AbstractEncoding ;
+      owl:onProperty swe:encoding ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:Count ;
+      owl:onProperty swe:elementCount ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:EncodedValues ;
+      owl:onProperty swe:values ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:elementCount ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:elementType ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:encoding ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:values ;
+    ] ;
+.
+swe:DataChoice
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_datachoice_class> ;
+  rdfs:label "DataChoice" ;
+  rdfs:subClassOf swe:AbstractDataComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AbstractDataComponent ;
+      owl:onProperty swe:item ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:Category ;
+      owl:onProperty swe:choiceValue ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:choiceValue ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "2"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:item ;
+    ] ;
+  skos:definition "The “DataChoice” class (also called Disjoint Union) is modeled on the definition of ‘Choice’ from ISO 11404. It is a composite component that allows for a choice of child components. By opposition to records that carry all their fields simultaneously, only one item at a time can be present in the data when wrapped in a “DataChoice”." ;
+.
+swe:DataRecord
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_datarecord_class> ;
+  rdfs:label "DataRecord" ;
+  rdfs:subClassOf swe:AbstractDataComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AbstractDataComponent ;
+      owl:onProperty swe:field ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:field ;
+    ] ;
+  skos:definition "The “DataRecord” class is modeled on the definition of ‘Record’ from ISO 11404. In this definition, a record is a composite data type composed of one to many fields, each of which having its own name and type definition. Thus it defines some logical collection of components of any type that are grouped for a given purpose." ;
+.
+swe:DataStream
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_datastream_class> ;
+  rdfs:label "DataStream" ;
+  rdfs:subClassOf swe:AbstractSWEIdentifiable ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AbstractDataComponent ;
+      owl:onProperty swe:elementType ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AbstractEncoding ;
+      owl:onProperty swe:encoding ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:Count ;
+      owl:onProperty swe:elementCount ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:EncodedValues ;
+      owl:onProperty swe:values ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:elementType ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:encoding ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:values ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:elementCount ;
+    ] ;
+.
+swe:EncodedValues
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_dataarray_class> ;
+  rdfs:label "EncodedValues" ;
+.
+swe:GeomType
+  a rdfs:Datatype ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_geometry_class> ;
+  rdfs:label "GeomType" ;
+  owl:oneOf (
+      "Point"
+      "LineString"
+      "Polygon"
+      "MultiPoint"
+      "MultiLineString"
+      "MultiPolygon"
+    ) ;
+.
+swe:Geometry
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_geometry_class> ;
+  rdfs:label "Geometry" ;
+  rdfs:subClassOf swe:AbstractDataComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom geosparql:Geometry ;
+      owl:onProperty swe:valueObject ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AllowedGeometries ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:srs ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:valueObject ;
+    ] ;
+.
+swe:IntegerPair
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_basic_types> ;
+  rdfs:label "IntegerPair" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:integer ;
+      owl:onProperty swe:item ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "2"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:item ;
+    ] ;
+.
+swe:Matrix
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_matrix_class> ;
+  rdfs:label "Matrix" ;
+  rdfs:subClassOf swe:DataArray ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:localFrame ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:referenceFrame ;
+    ] ;
+.
+swe:NilValue
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_nilvalues_class> ;
+  rdfs:label "NilValue" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:nilReason ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:valueObject ;
+    ] ;
+.
+swe:NilValues
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_nilvalues_class> ;
+  rdfs:label "NilValues" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:nilValue ;
+    ] ;
+.
+swe:Quality
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_quality_union> ;
+  rdfs:label "Quality" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:bySomething ;
+    ] ;
+  skos:definition "Instances of this class should take one of byCategory, byQuantity, byQuantityRange, byText, which are sub-properties of bySomething" ;
+.
+swe:Quantity
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_quantity_class> ;
+  rdfs:label "Quantity" ;
+  rdfs:subClassOf swe:AbstractSimpleComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AllowedValues ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:Real ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:uom ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+.
+swe:QuantityRange
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_quantityrange_class> ;
+  rdfs:label "QuantityRange" ;
+  rdfs:subClassOf swe:AbstractSimpleComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AllowedValues ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:RealPair ;
+      owl:onProperty swe:valueObject ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:uom ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:valueObject ;
+    ] ;
+.
+swe:Real
+  a rdfs:Datatype ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#uml_basic_types" ;
+  rdfs:label "Real" ;
+  owl:equivalentClass [
+      a rdfs:Datatype ;
+      owl:unionOf (
+          xsd:decimal
+          xsd:double
+          xsd:float
+        ) ;
+    ] ;
+.
+swe:RealPair
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_basic_types> ;
+  rdfs:label "RealPair" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:Real ;
+      owl:onProperty swe:item ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "2"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:item ;
+    ] ;
+.
+swe:ScopedName
+  a owl:Class ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#uml_alldatacomponents" ;
+  rdfs:label "ScopedName" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:string ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:codeSpace ;
+    ] ;
+.
+swe:Text
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_text_class> ;
+  rdfs:label "Text" ;
+  rdfs:subClassOf swe:AbstractSimpleComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AllowedTokens ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:string ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+.
+swe:Time
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_time_class> ;
+  rdfs:label "Time" ;
+  rdfs:subClassOf swe:AbstractSimpleComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AllowedTimes ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:dateTime ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:uom ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:hasTimePosition ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:localFrame ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:referenceTime ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+.
+swe:TimePair
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_basic_types> ;
+  rdfs:label "TimePair" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:dateTime ;
+      owl:onProperty swe:item ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "2"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:item ;
+    ] ;
+.
+swe:TimeRange
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_timerange_class> ;
+  rdfs:label "TimeRange" ;
+  rdfs:subClassOf swe:AbstractSimpleComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AllowedTimes ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:TimePair ;
+      owl:onProperty swe:valueObject ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:dateTime ;
+      owl:onProperty swe:referenceTime ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:uom ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:localFrame ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:referenceTime ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:valueObject ;
+    ] ;
+.
+swe:TokenPair
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_basic_types> ;
+  rdfs:label "TokenPair" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:string ;
+      owl:onProperty swe:item ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "2"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:item ;
+    ] ;
+.
+swe:Vector
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_vector_class> ;
+  rdfs:label "Vector" ;
+  rdfs:subClassOf swe:AbstractDataComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AnyNumerical ;
+      owl:onProperty swe:coordinate ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:referenceFrame ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:localFrame ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:coordinate ;
+    ] ;
+  skos:definition """The “Vector” class is used to express multi-dimensional quantities with respect to a well defined referenced frame (usually a spatial or spatio-temporal reference frame). This is done by projecting the quantity on one or several axes that define the reference frame and assigning a value to each of the axis projections.
+
+The “Vector” class is a special case of a record that takes a collection of coordinates that are restricted to a numerical representation. """ ;
+.
+swe:axisID
+  a owl:DatatypeProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_simplecomponents> ;
+  rdfs:domain swe:AbstractSimpleComponent ;
+  rdfs:label "axisID" ;
+.
+swe:byBoolean
+  a owl:ObjectProperty ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#_b34a59af-d7b7-40a4-9e27-10c1eeb08bb1" ;
+  rdfs:domain swe:AnyScalar ;
+  rdfs:label "byBoolean" ;
+  rdfs:range swe:Boolean ;
+  rdfs:subPropertyOf swe:bySomething ;
+.
+swe:byCategory
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_quality_union> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:Quality
+          swe:AnyScalar
+        ) ;
+    ] ;
+  rdfs:label "byCategory" ;
+  rdfs:range swe:Category ;
+  rdfs:subPropertyOf swe:bySomething ;
+.
+swe:byCategoryRange
+  a owl:ObjectProperty ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#_b34a59af-d7b7-40a4-9e27-10c1eeb08bb1" ;
+  rdfs:domain swe:AnyRange ;
+  rdfs:label "byCategoryRange" ;
+  rdfs:range swe:CategoryRange ;
+  rdfs:subPropertyOf swe:bySomething ;
+.
+swe:byCount
+  a owl:ObjectProperty ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#_b34a59af-d7b7-40a4-9e27-10c1eeb08bb1" ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:AnyScalar
+          swe:AnyNumerical
+        ) ;
+    ] ;
+  rdfs:label "byCount" ;
+  rdfs:range swe:Count ;
+  rdfs:subPropertyOf swe:bySomething ;
+.
+swe:byCountRange
+  a owl:ObjectProperty ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#_b34a59af-d7b7-40a4-9e27-10c1eeb08bb1" ;
+  rdfs:domain swe:AnyRange ;
+  rdfs:label "byCountRange" ;
+  rdfs:range swe:CountRange ;
+  rdfs:subPropertyOf swe:bySomething ;
+.
+swe:byQuantity
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_quality_union> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:Quality
+          swe:AnyScalar
+          swe:AnyNumerical
+        ) ;
+    ] ;
+  rdfs:label "byQuantity" ;
+  rdfs:range swe:Quantity ;
+  rdfs:subPropertyOf swe:bySomething ;
+.
+swe:byQuantityRange
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_quality_union> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:Quality
+          swe:AnyRange
+        ) ;
+    ] ;
+  rdfs:label "byQuantityRange" ;
+  rdfs:range swe:QuantityRange ;
+  rdfs:subPropertyOf swe:bySomething ;
+.
+swe:bySomething
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_quality_union> ;
+  rdfs:domain swe:Quality ;
+  rdfs:label "bySomething" ;
+  skos:definition "Abstract super-property of byCategory, byQuantity, byQuantityRange, byText etc" ;
+.
+swe:byText
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_quality_union> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:Quality
+          swe:AnyScalar
+        ) ;
+    ] ;
+  rdfs:label "byText" ;
+  rdfs:range swe:Text ;
+  rdfs:subPropertyOf swe:bySomething ;
+.
+swe:byTime
+  a owl:ObjectProperty ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#_b34a59af-d7b7-40a4-9e27-10c1eeb08bb1" ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:AnyScalar
+          swe:AnyNumerical
+        ) ;
+    ] ;
+  rdfs:label "byTime" ;
+  rdfs:range swe:Time ;
+  rdfs:subPropertyOf swe:bySomething ;
+.
+swe:byTimeRange
+  a owl:ObjectProperty ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#_b34a59af-d7b7-40a4-9e27-10c1eeb08bb1" ;
+  rdfs:domain swe:AnyRange ;
+  rdfs:label "byTimeRange" ;
+  rdfs:range swe:TimeRange ;
+  rdfs:subPropertyOf swe:bySomething ;
+.
+swe:choiceValue
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_datachoice_class> ;
+  rdfs:domain swe:DataChoice ;
+  rdfs:label "choiceValue" ;
+  rdfs:range swe:Category ;
+.
+swe:codeSpace
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_category_class> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:Category
+          swe:CategoryRange
+        ) ;
+    ] ;
+  rdfs:label "codeSpace" ;
+.
+swe:constraint
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_simple_components> ;
+  rdfs:label "constraint" ;
+.
+swe:coordinate
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_record_components> ;
+  rdfs:domain swe:Vector ;
+  rdfs:label "coordinate" ;
+  rdfs:range swe:AnyNumerical ;
+.
+swe:definition
+  a owl:AnnotationProperty ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#uml_alldatacomponents" ;
+  rdfs:label "definition" ;
+.
+swe:description
+  a owl:AnnotationProperty ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#uml_alldatacomponents" ;
+  rdfs:label "description" ;
+  rdfs:range xsd:string ;
+  rdfs:subPropertyOf dcterms:description ;
+.
+swe:elementCount
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_dataarray_class> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:DataArray
+          swe:DataStream
+        ) ;
+    ] ;
+  rdfs:label "elementCount" ;
+  rdfs:range swe:Count ;
+.
+swe:elementType
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_dataarray_class> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:DataArray
+          swe:DataStream
+        ) ;
+    ] ;
+  rdfs:label "elementType" ;
+  rdfs:range swe:AbstractDataComponent ;
+.
+swe:encoding
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_dataarray_class> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:DataArray
+          swe:DataStream
+        ) ;
+    ] ;
+  rdfs:label "encoding" ;
+  rdfs:range swe:AbstractEncoding ;
+.
+swe:field
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_record_components> ;
+  rdfs:domain swe:DataRecord ;
+  rdfs:label "field" ;
+  rdfs:range swe:AbstractDataComponent ;
+.
+swe:geomType
+  a owl:DatatypeProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_geometry_class> ;
+  rdfs:domain swe:AllowedGeometries ;
+  rdfs:label "geomType" ;
+  rdfs:range swe:GeomType ;
+.
+swe:id
+  a owl:AnnotationProperty ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#uml_alldatacomponents" ;
+  rdfs:label "identifier" ;
+  rdfs:range xsd:string ;
+.
+swe:interval
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_allowedvalues_class> ;
+  rdfs:label "interval" ;
+.
+swe:item
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_datachoice_class> ;
+  rdfs:domain swe:DataChoice ;
+  rdfs:label "item" ;
+  rdfs:range swe:AbstractDataComponent ;
+.
+swe:label
+  a owl:AnnotationProperty ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#uml_alldatacomponents" ;
+  rdfs:label "label" ;
+  rdfs:range xsd:string ;
+  rdfs:subPropertyOf rdfs:label ;
+.
+swe:localFrame
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_time_class> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:Time
+          swe:TimeRange
+          swe:Vector
+          swe:Matrix
+        ) ;
+    ] ;
+  rdfs:label "localFrame" ;
+.
+swe:nilReason
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_nilvalues_class> ;
+  rdfs:domain swe:NilValue ;
+  rdfs:label "nilReason" ;
+.
+swe:nilValue
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_nilvalues_class> ;
+  rdfs:domain swe:NilValues ;
+  rdfs:label "nilValue" ;
+  rdfs:range swe:NilValue ;
+.
+swe:nilValues
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_simplecomponents> ;
+  rdfs:domain swe:AbstractSimpleComponent ;
+  rdfs:label "nilValues" ;
+  rdfs:range swe:NilValues ;
+.
+swe:optional
+  a owl:DatatypeProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_record_components> ;
+  rdfs:domain swe:AbstractDataComponent ;
+  rdfs:label "optional" ;
+  rdfs:range xsd:boolean ;
+.
+swe:pattern
+  a owl:DatatypeProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_allowedtokens_class> ;
+  rdfs:domain swe:AllowedTokens ;
+  rdfs:label "pattern" ;
+  rdfs:range xsd:string ;
+.
+swe:quality
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_simplecomponents> ;
+  rdfs:domain swe:AbstractSimpleComponent ;
+  rdfs:label "quality" ;
+.
+swe:referenceFrame
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_simplecomponents> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:AbstractSimpleComponent
+          swe:Vector
+          swe:Matrix
+        ) ;
+    ] ;
+  rdfs:label "referenceFrame" ;
+.
+swe:referenceTime
+  a owl:DatatypeProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_time_class> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:Time
+          swe:TimeRange
+        ) ;
+    ] ;
+  rdfs:label "referenceTime" ;
+  rdfs:range xsd:dateTime ;
+.
+swe:significantFigures
+  a owl:DatatypeProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_allowedvalues_class> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:AllowedValues
+          swe:AllowedTimes
+        ) ;
+    ] ;
+  rdfs:label "significantFigures" ;
+  rdfs:range xsd:positiveInteger ;
+.
+swe:srs
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_geometry_class> ;
+  rdfs:domain swe:Geometry ;
+  rdfs:label "srs" ;
+.
+swe:uom
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_quantity_class> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:Quantity
+          swe:Time
+          swe:QuantityRange
+          swe:TimeRange
+        ) ;
+    ] ;
+  rdfs:label "uom" ;
+.
+swe:updatable
+  a owl:DatatypeProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_record_components> ;
+  rdfs:domain swe:AbstractDataComponent ;
+  rdfs:label "updatable" ;
+  rdfs:range xsd:boolean ;
+.
+swe:value
+  a owl:DatatypeProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_simple_components> ;
+  rdfs:label "value (literal)" ;
+.
+swe:valueObject
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_simple_components> ;
+  rdfs:label "value (object)" ;
+.
+swe:values
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_dataarray_class> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:DataArray
+          swe:DataStream
+        ) ;
+    ] ;
+  rdfs:label "values" ;
+  rdfs:range swe:EncodedValues ;
+.

@@ -1,0 +1,150 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix cco: <https://www.commoncoreontologies.org/> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix tb21: <http://www.opengis.net/ont/tb21/> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.opengis.net/ont/tb21/region> rdf:type owl:Ontology ;
+    dcterms:title "Region-of-interest"@en ;
+    dcterms:description "Extension to Common Core Ontologies adding a Region-of-Interest class utilising GeoSPARQL"@en ;
+    owl:imports <http://purl.obolibrary.org/obo/bfo> ;
+    owl:imports <http://www.opengis.net/ont/tb21/geosparql> ;
+    owl:imports <https://www.commoncoreontologies.org/GeospatialOntology> ;
+    dcterms:created "2026-03-26"^^xsd:date ;
+    dcterms:modified "2026-04-28"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0002-3884-3420> ;
+    rdfs:comment """
+    Components for OGC TB21 Metadata. 
+
+    This file is an example ontology artifact prepared solely for OGC Testbed 21 reporting and demonstration activities. 
+    It is based on a point in time developmental ontology slim and is not an official NGA, GMSB, or IDO ontology release. 
+    The IRIs, labels, definitions, axioms, and module structure in this file should not be treated as authoritative, stable, reusable, or suitable for incorporation into OGC baseline standards, operational systems, or future testbed activities. 
+    
+    Future work should reference officially published GMSB IDO releases when they become available.
+    """@en .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+### http://www.opengis.net/ont/tb21/hasVertex
+tb21:hasVertex
+					 rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf cco:ont00001909 ;
+           owl:inverseOf tb21:isVertexOf ;
+           rdfs:domain obo:BFO_0000140 ;
+           rdfs:range obo:BFO_0000147 ;
+           rdfs:label "has vertex"@en ;
+           skos:definition "x has_vertex y iff x, has_tangential_part y, and y is a fiat_point" ;
+           cco:ont00001760 <http://www.opengis.net/ont/tb21/region> .
+
+
+### http://www.opengis.net/ont/tb21/isVertexOf
+tb21:isVertexOf
+					 rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf cco:ont00001796 ;
+           rdfs:domain obo:BFO_0000147 ;
+           rdfs:range obo:BFO_0000140 ;
+           rdfs:label "is vertex of"@en ;
+           skos:definition "x is_vertex_of y iff y, has_tangential_part x, and x is a fiat_point" ;
+           cco:ont00001760 <http://www.opengis.net/ont/tb21/region> .
+
+
+### http://www.opengis.net/ont/tb21/hasBoundary
+tb21:hasBoundary
+					 rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf cco:ont00001909 ;
+           owl:inverseOf tb21:isBoundaryOf ;
+           rdfs:domain obo:BFO_0000006 ;
+           rdfs:range obo:BFO_0000140 ;
+           rdfs:label "has boundary"@en ;
+           skos:definition "x has_boundary y iff x, has_tangential_part y, y has dimensionality one less than x, and no part of x is exterior to y" ;
+           cco:ont00001760 <http://www.opengis.net/ont/tb21/region> .
+
+
+### http://www.opengis.net/ont/tb21/isBoundaryOf
+tb21:isBoundaryOf
+					 rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf cco:ont00001796 ;
+           rdfs:domain obo:BFO_0000140 ;
+           rdfs:range obo:BFO_0000006 ;
+           rdfs:label "is boundary of"@en ;
+           skos:definition "x is_boundary_of y iff y, has_tangential_part x, x has dimensionality one less than y, and no part of y is exterior to x" ;
+           cco:ont00001760 <http://www.opengis.net/ont/tb21/region> .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+
+#################################################################
+#    Classes
+#################################################################
+
+
+### http://www.opengis.net/ont/tb21/RegionOfInterest
+tb21:RegionOfInterest
+					 rdf:type owl:Class ;
+           rdfs:subClassOf obo:BFO_0000006 ;
+           rdfs:subClassOf [ 
+                rdf:type owl:Restriction ;
+                owl:onProperty tb21:hasBoundary ;
+                owl:allValuesFrom tb21:RegionBoundary
+                           ] ;
+           rdfs:subClassOf [
+                rdf:type owl:Restriction ;
+                owl:onProperty geo:hasBoundingBox ;
+                owl:someValuesFrom sf:Envelope ;
+                           ] ;
+           rdfs:subClassOf [
+                rdf:type owl:Restriction ;
+                owl:onProperty geo:hasGeometry ;
+                owl:someValuesFrom sf:Geometry ;
+                           ] ;
+           rdfs:label "region of interest"@en ;
+           skos:definition "Spatial region that is the subject of investigation or observation" ;
+           skos:example "A spatial region with which some energy interacts in the creation of a scene (by reflection, refraction, absorption, emission)" ,
+                        "A spatial region within a scene that is subject to further analysis" ;
+           skos:note """
+           The term 'domain <coverage>' denotes the set of geometric objects that an imagery scene represents https://isotc211.geolexica.org/concepts/2846/
+           These would fall within the region of interest. 
+
+           The term 'environmental landscape' is sometimes used to denote the entity that a geographic imagery scene represents 
+           - see note to the definition of 'geographic imagery scene'  https://isotc211.geolexica.org/concepts/793/
+           """ ;
+           cco:ont00001760 <http://www.opengis.net/ont/tb21/region> .
+
+
+### http://www.opengis.net/ont/tb21/RegionBoundary
+tb21:RegionBoundary
+	rdf:type owl:Class ;
+  rdfs:subClassOf obo:BFO_0000140 ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:allValuesFrom tb21:RegionOfInterest ;
+      owl:onProperty tb21:isBoundaryOf ;
+    ] ;
+  rdfs:subClassOf [
+      rdf:type owl:Restriction ;
+      owl:minCardinality "2"^^xsd:nonNegativeInteger ;
+      owl:onProperty tb21:hasVertex ;
+    ] ;
+  rdfs:label "region boundary"@en ;
+  skos:definition "fiat boundary that delimits a region of interest, minimum of two vertices"@en ;
+  cco:ont00001760 <http://www.opengis.net/ont/tb21/region> .
+
+
+#################################################################
+#    Individuals
+#################################################################
+

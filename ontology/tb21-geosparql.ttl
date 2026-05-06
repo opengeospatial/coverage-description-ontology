@@ -1,0 +1,103 @@
+@prefix cco: <https://www.commoncoreontologies.org/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.opengis.net/ont/tb21/geosparql> rdf:type owl:Ontology ;
+    dcterms:title "Alignment of GeoSPARQL with BFO/CCO"@en ;
+    dcterms:description """
+    Developed during the OGC Testbed 21 to support development of an Ontology for Coverage Description based on BFO, but is not dependant on that ontology.
+
+    This alignment differs from the non-normative alignment in the current GeoSPARQL standard https://docs.ogc.org/is/22-047r1/22-047r1.html#_0e765f18-95fb-4b31-80d2-da9961f22214 . 
+    A change request based on this will be submitted to the GeoSPARQL working group for inclusion in the next GeoSPARQL release.
+    See https://github.com/opengeospatial/ogc-geosparql/issues/645 
+    """@en ;
+    rdfs:comment """
+    No new classes or properties. 
+    Just axioms to align GeoSPARQL with BFO/CCO. 
+    """@en ;
+    dcterms:created "2026-03-26"^^xsd:date ;
+    dcterms:modified "2026-04-28"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0002-3884-3420> ;
+    owl:imports <http://www.opengis.net/ont/geosparql> ;
+    owl:imports <http://www.opengis.net/ont/sf> ;
+    owl:imports <https://www.commoncoreontologies.org/InformationEntityOntology> ;
+    owl:imports <http://purl.obolibrary.org/obo/bfo> ;
+    .
+
+###  http://www.opengis.net/ont/geosparql#SpatialObject
+geo:SpatialObject 
+    rdf:type owl:Class ;
+    rdfs:subClassOf obo:BFO_0000001 ;
+    skos:prefLabel "Spatial Object"@en ;
+.
+
+###  http://www.opengis.net/ont/geosparql#Feature
+geo:Feature 
+    rdf:type owl:Class ;
+    skos:prefLabel "Feature"@en ;
+    owl:equivalentClass [ 
+        rdf:type owl:Class ;
+        owl:unionOf ( 
+            obo:BFO_0000004
+            obo:BFO_0000015
+                    )
+    ] ;
+.
+
+###  http://www.opengis.net/ont/geosparql#hasBoundingBox
+geo:hasBoundingBox
+    rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf cco:ont00001931 ;
+    skos:prefLabel "has bounding box"@en ;
+.
+
+###  http://www.opengis.net/ont/geosparql#hasGeometry
+geo:hasGeometry 
+    rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf cco:ont00001917 ;
+    skos:prefLabel "has Geometry"@en ;
+.
+
+###  http://www.opengis.net/ont/geosparql#Geometry
+geo:Geometry 
+    rdf:type owl:Class ;
+    rdfs:subClassOf cco:ont00000958 ;
+    skos:prefLabel "Geometry"@en ;
+.
+
+###  http://www.opengis.net/ont/geosparql#hasSerialization
+geo:hasSerialization
+	  rdf:type owl:DatatypeProperty ;
+    rdfs:subPropertyOf owl:topDataProperty ;
+	  skos:prefLabel "has serialization"@en ;
+.
+
+
+###  http://purl.obolibrary.org/obo/BFO_0000006
+obo:BFO_0000006 rdf:type owl:Class ;
+                rdfs:subClassOf geo:Feature ;
+                rdfs:label "spatial region"@en ;
+.
+
+###  http://purl.obolibrary.org/obo/BFO_0000029
+obo:BFO_0000029 rdf:type owl:Class ;
+                rdfs:subClassOf geo:Feature ;
+                rdfs:label "site"@en ;
+ .
+
+###  http://purl.obolibrary.org/obo/BFO_0000140
+obo:BFO_0000140 rdf:type owl:Class ;
+                rdfs:subClassOf geo:Feature ;
+                rdfs:label "continuant fiat boundary"@en ;
+.
+
+
+

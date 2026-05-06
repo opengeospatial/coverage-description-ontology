@@ -1,0 +1,408 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix cco: <https://www.commoncoreontologies.org/> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix tb21: <http://www.opengis.net/ont/tb21/> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.opengis.net/ont/tb21/image> rdf:type owl:Ontology ;
+    dcterms:title "Image cell-properties"@en ;
+    dcterms:description "Extension to Common Core Ontologies adding Image cell-properties utilising SWE Common Data Record"@en ;
+    owl:imports <http://www.opengis.net/ont/tb21/region> ;
+#    owl:imports <http://www.opengis.net/ont/tb21/coord> ;
+    dcterms:created "2026-04-02"^^xsd:date ;
+    dcterms:modified "2026-04-28"^^xsd:date ;
+    dcterms:creator <https://orcid.org/0000-0002-3884-3420> ;
+    rdfs:comment """
+    Components for OGC TB21 Metadata. 
+
+    This file is an example ontology artifact prepared solely for OGC Testbed 21 reporting and demonstration activities. 
+    It is based on a point in time developmental ontology slim and is not an official NGA, GMSB, or IDO ontology release. 
+    The IRIs, labels, definitions, axioms, and module structure in this file should not be treated as authoritative, stable, reusable, or suitable for incorporation into OGC baseline standards, operational systems, or future testbed activities. 
+    
+    Future work should reference officially published GMSB IDO releases when they become available.
+    """@en .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.opengis.net/ont/tb21/hasUnit
+tb21:hasUnit rdf:type owl:ObjectProperty ;
+             rdfs:range cco:ont00000120 ;
+             rdfs:label "has unit"@en ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+###  http://www.opengis.net/ont/tb21/hasTimestamp
+tb21:hasTimestamp
+						 rdf:type owl:ObjectProperty ;
+             rdfs:label "has timestamp"@en ;
+             skos:definition "relates something to a time value specification specifying when it happened." ;
+             skos:scopeNote "Usage in some cases is approximate, when the event is extended. To be more precise use has start timestamp and has end timestamp to indicate the boundaries." ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+
+###  http://www.opengis.net/ont/tb21/hasCorrSource
+tb21:hasCorrSource
+						 rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf tb21:hasICEpart ;
+             rdfs:domain tb21:RasterElCorrespondence ;
+             rdfs:range [ owl:intersectionOf ( tb21:Coord
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty cco:ont00001912 ;
+                                                 owl:someValuesFrom tb21:RasterCRS
+                                               ]
+                                             ) ;
+                          rdf:type owl:Class
+                        ] ;
+             rdfs:label "has correspondence source"@en ;
+             skos:definition "x has correspondent source y if x is an image correspondence and y is and image coordinate" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+
+###  http://www.opengis.net/ont/tb21/hasCorrTarget
+tb21:hasCorrTarget
+						 rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf tb21:hasICEpart ;
+             rdfs:domain tb21:RasterElCorrespondence ;
+             rdfs:range obo:BFO_0000147 ;
+             rdfs:label "has correspondence target"@en ;
+             skos:definition "x has correspondent target y if x is an image correspondence and y is some thing or geocoordinate" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+
+###  http://www.opengis.net/ont/tb21/hasICEpart
+tb21:hasICEpart
+						 rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf owl:topObjectProperty ;
+             owl:inverseOf tb21:isPartOfICE ;
+             rdfs:domain cco:ont00000958 ;
+             rdfs:range cco:ont00000958 ;
+             rdfs:label "has information content entity part" ;
+             skos:definition "x has information content entity part y when x is an information content entity and y is an information content entity that is always a part of x" ;
+            cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+
+###  http://www.opengis.net/ont/tb21/hasCorr
+tb21:hasCorr
+						 rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf tb21:hasICEpart ;
+             rdfs:domain tb21:RasterElCorrGroup ;
+             rdfs:range tb21:RasterElCorrespondence ;
+             rdfs:label "has correspondence"@en ;
+             skos:definition "x has correspondence y if x is a correspondence group and y is a correspondence that is part of that group" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+
+###  http://www.opengis.net/ont/tb21/hasNextCorr
+tb21:hasNextCorr
+						 rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf tb21:hasICEpart ;
+             rdfs:domain [ owl:intersectionOf ( tb21:RasterElCorrespondence
+                                                [ rdf:type owl:Restriction ;
+                                                  owl:onProperty tb21:isPartOfICE ;
+                                                  owl:someValuesFrom tb21:RasterElCorrGroup
+                                                ]
+                                              ) ;
+                           rdf:type owl:Class
+                         ] ;
+             rdfs:label "has next correspondence"@en ;
+             skos:definition "A relation between two correspondences within a correspondence group where the correspondences are ordered" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+
+###  http://www.opengis.net/ont/tb21/isPartOfICE
+tb21:isPartOfICE
+						 rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf owl:topObjectProperty ;
+             rdfs:label "is part of information content entity"@en ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+
+###  http://www.opengis.net/ont/tb21/isCornerOf
+tb21:isCornerOf
+					 rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf tb21:isPartOfICE ;
+           owl:inverseOf tb21:hasCorner ;
+           rdfs:domain tb21:CCScoord ;
+           rdfs:range tb21:Image ;
+           rdfs:label "is corner of"@en ;
+           skos:definition "a relation from a corner point to an image" ;
+           cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+
+###  http://www.opengis.net/ont/tb21/hasCorner
+tb21:hasCorner
+					 rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf tb21:hasICEpart ;
+           rdfs:domain tb21:Image ;
+           rdfs:range tb21:CCScoord ;
+           rdfs:label "has corner"@en ;
+           skos:definition "a relation from an image to a corner point expressed as pixel indexes" ;
+           cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+
+###  http://www.opengis.net/ont/tb21/hasCellPropertyType
+tb21:hasCellPropertyType
+						 rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf cco:ont00001920 ;
+           rdfs:domain tb21:Image ;
+           rdfs:range tb21:RangeType ;
+           rdfs:label "has cell property type"@en ;
+           skos:definition "x has_cell_property_type y iff y is an instance of Prescriptive Information Content Entity and x is an instance of Image and y prescribes x. " ;
+           cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.opengis.net/ont/tb21/hasRowNumber
+tb21:hasRowNumber
+						 rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:range xsd:integer ;
+             rdfs:label "has row number"@en ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+
+###  http://www.opengis.net/ont/tb21/hasColNumber
+tb21:hasColNumber
+						 rdf:type owl:DatatypeProperty ;
+             rdfs:range xsd:integer ;
+             rdfs:label "has column number"@en ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+
+###  http://www.opengis.net/ont/tb21/hasDataRecord
+tb21:hasDataRecord
+						 rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain tb21:RangeType ;  
+             rdfs:range rdf:JSON ;
+             skos:definition """
+             Connects a SWE Common DataRecord to a coverage RangeType.
+             """@en ;
+             skos:scopeNote """
+             The value is a SWE Common DataRecord encoded using JSON as prescribed by the normative JSON Schema (https://schemas.opengis.net/sweCommon/3.0/json/).
+             """@en ;
+             rdfs:label "has DataRecord"@en ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.opengis.net/ont/tb21/Image
+tb21:Image
+				    rdf:type owl:Class ;
+            rdfs:subClassOf cco:ont00001069 , 
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty cco:ont00001938 ;
+                               owl:allValuesFrom tb21:RegionOfInterest
+                             ] ;
+            rdfs:label "Image (of a region)"@en ;
+            skos:definition "gridded coverage whose attribute values are a numerical representation of a physical parameter"@en ;   
+            dcterms:source <https://isotc211.geolexica.org/concepts/551/> , <https://isotc211.geolexica.org/concepts/793/> ;
+            .
+
+###  http://www.opengis.net/ont/tb21/TAItimeStamp
+tb21:TAItimeStamp
+						 rdf:type owl:Class ;
+             rdfs:subClassOf tb21:ValueSpec ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty tb21:hasUnit ;
+                               owl:hasValue <http://qudt.org/vocab/unit/NanoSEC>
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty cco:ont00001912 ;
+                               owl:hasValue cco:ont00001590
+                             ] ;
+             rdfs:label "TAI timestamp in ns"@en ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+
+###  http://www.opengis.net/ont/tb21/RasterElCorrGroup
+tb21:RasterElCorrGroup
+						 rdf:type owl:Class ;
+             rdfs:subClassOf cco:ont00000958 ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty tb21:hasICEpart ;
+                               owl:minQualifiedCardinality "2"^^xsd:nonNegativeInteger ;
+                               owl:onClass tb21:RasterElCorrespondence
+                             ] ;
+             rdfs:label "raster element correspondence group"@en ;
+             skos:definition "an information content entity that is a collection of correspondence points that together indicate some extended entity" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+
+###  http://www.opengis.net/ont/tb21/RasterBoundsCorrGroup
+tb21:RasterBoundsCorrGroup
+						 rdf:type owl:Class ;
+             rdfs:subClassOf tb21:RasterElCorrGroup ;
+             rdfs:label "raster bounds correspondence group"@en ;
+             skos:definition "A raster correspondence group consisting of correspondences that together relate a the whole of the raster to an area of the ground that would be imaged by those pixels, if they were imaged." ;
+             skos:scopeNote "Not valid in the case the raster corners don't correspond to valid ground positions" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+
+
+###  http://www.opengis.net/ont/tb21/ValueSpec
+tb21:ValueSpec rdf:type owl:Class ;
+                rdfs:subClassOf cco:ont00000958 ;
+                rdfs:comment """Can't figure out if they are descriptive or designative or even prescriptive some times.
+
+An example of descriptive might be a measurement, if we consider to be describing some entity by it's quality, such as a value specification of 10 meters describing a piece of wood. Or the same value specification could be designating a quality. Or, as part of instructions, it could be prescriptive.
+
+Probably sort this out by choose how to relate the value specification to its target and letting it autoclassify at an instance level.""" ;
+                rdfs:label "value specification"@en ;
+                skos:definition "An information content entity that specifies a value within a classification scheme or on a quantitative scale." ;
+                cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+###  http://www.opengis.net/ont/tb21/Coord
+tb21:Coord
+             rdf:type owl:Class ;
+             rdfs:subClassOf tb21:ValueSpec ;
+             rdfs:label "coordinate"@en ;
+             skos:definition "a value specification consisting of one or more values, typically with an order, each of which is taken from an (typically) ordered set and which together designate or describe some thing as prescribed by a coordinate reference system" ;
+             skos:scopeNote """The singular \"coordinate\" is here used to what might be called a coordinate tuple, except we don't require that the coordinate is a tuple, just that it can have one or more values that might be named rather than ordered.
+
+We don't define coordinate as in one of the things in a tuple, because such a thing isn't about anything on its own. When we have informations structure entities we can define them there, but in any cases coordinates in this sense are always going to be literals.""" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+###  http://www.opengis.net/ont/tb21/RasterCoord
+tb21:RasterCoord
+						 rdf:type owl:Class ;
+             rdfs:subClassOf tb21:Coord ,
+                            #  [ rdf:type owl:Restriction ;
+                            #    owl:onProperty cco:ont00001912 ;
+                            #    owl:someValuesFrom tb21:RasterCRS
+                            #  ] ,
+                            #  [ rdf:type owl:Restriction ;
+                            #    owl:onProperty cco:ont00001912 ;
+                            #    owl:hasValue tb21:CCS
+                            #  ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty tb21:hasXvalue ;
+                               owl:cardinality "1"^^xsd:nonNegativeInteger
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty tb21:hasYvalue ;
+                               owl:cardinality "1"^^xsd:nonNegativeInteger
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty tb21:hasZvalue ;
+                               owl:maxCardinality "0"^^xsd:nonNegativeInteger
+                             ] ;
+             rdfs:label "raster coordinate"@en ;
+             skos:definition "coordinate of a value in a raster" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+
+###  http://www.opengis.net/ont/tb21/RasterElGroundCorr
+tb21:RasterElGroundCorr
+						 rdf:type owl:Class ;
+            rdfs:subClassOf tb21:RasterElCorrespondence ;
+            rdfs:subClassOf [
+                rdf:type owl:Restriction ;
+                owl:onClass geo:Geometry ;
+                owl:onProperty tb21:hasCorrTarget ;
+                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                ] ;
+            rdfs:subClassOf [
+                rdf:type owl:Restriction ;
+                owl:onClass tb21:CCScoord ;
+                owl:onProperty tb21:hasCorrSource ;
+                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                ] ;
+             rdfs:comment "geo:Geometry allows use of WKTLiteral serialization" ;
+             rdfs:label "raster element ground correspondence"@en ;
+             skos:definition "an image correspondence that relates a raster image sample coordinate to a geocoordinate of a something on or near the ground" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+
+###  http://www.opengis.net/ont/tb21/CornerCorrespondence
+tb21:CornerCorrespondence
+						 rdf:type owl:Class ;
+             rdfs:subClassOf tb21:RasterElGroundCorr ;
+             rdfs:label "corner correspondence"@en ;
+             skos:definition "A raster ground correspondence that relates the image coordinate, one of a set of vertices of polygon shaped raster content, to a corresponding point on or near the ground" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+
+###  http://www.opengis.net/ont/tb21/RasterElCorrespondence
+tb21:RasterElCorrespondence
+						 rdf:type owl:Class ;
+             rdfs:subClassOf cco:ont00000958 ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty tb21:hasCorrSource ;
+                               owl:minCardinality "1"^^xsd:nonNegativeInteger
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty tb21:hasCorrTarget ;
+                               owl:minCardinality "1"^^xsd:nonNegativeInteger
+                             ] ;
+             rdfs:label "raster element correspondence"@en ;
+             skos:definition "an information content entity that relates a coordinate of an image element to the coordinate of something or some place in the image" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+
+###  http://www.opengis.net/ont/tb21/CCScoord
+tb21:CCScoord
+						 rdf:type owl:Class ;
+             rdfs:subClassOf tb21:RasterCoord ,
+                            #  [ rdf:type owl:Restriction ;
+                            #    owl:onProperty cco:ont00001912 ;
+                            #    owl:hasValue tb21:CCS
+                            #  ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty tb21:hasRowNumber ;
+                               owl:someValuesFrom xsd:integer
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty tb21:hasColNumber ;
+                               owl:someValuesFrom xsd:integer
+                             ] ;
+             rdfs:label "CCS coordinate"@en ;
+             skos:definition "a raster coordinate that is 0 based, with origin at the top left, x along rows to the right and y downwards along columns" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+
+
+###  http://www.opengis.net/ont/tb21/RangeType
+tb21:RangeType
+					rdf:type owl:Class ;
+          rdfs:subClassOf cco:ont00000965 ;
+          rdfs:label "RangeType"@en ;
+          rdfs:subClassOf [
+                rdf:type owl:Restriction ;
+                owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+                owl:onProperty tb21:hasDataRecord ;
+          ] ;
+          skos:definition """Definition of semantics and structure of encoded values in the range of a coverage."""@en ;
+          cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+
+###  http://www.opengis.net/ont/tb21/CCS
+tb21:CCS
+						 rdf:type owl:NamedIndividual ,
+                      tb21:RasterCRS ;
+             rdfs:label "zero-based row and column coordinate reference system"@en ;
+             skos:altLabel "CCS" ,
+                           "NITF common coordinate system" ;
+             skos:definition "A raster coordinate reference system which designates a raster element by it's row and column, with the origin 0,0 at the top left corner of the top left pixel and the centers of the pixels at .5, with columns starting left to right and rows starting top to bottom" ;
+             owl:sameAs <https://www.opengis.net/def/crs/OGC/0/Index2D> ;
+.
+

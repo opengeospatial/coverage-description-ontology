@@ -1,0 +1,192 @@
+@prefix cco: <https://www.commoncoreontologies.org/> .
+@prefix ex: <http://www.opengis.net/tb21/ex/single-image-hevc/> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix qunit: <http://qudt.org/vocab/unit/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sf: <http://www.opengis.net/ont/sf#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix tb21: <http://www.opengis.net/ont/tb21/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.opengis.net/tb21/ex/single-image-hevc>
+  a owl:Ontology ;
+  owl:imports <http://www.opengis.net/ont/tb21/image> ;
+.
+<urn:uuid:707985a2-6e1b-470a-b4c1-79dc1c16ec38>
+  a tb21:Image ; 
+  tb21:hasTimestamp <urn:uuid:0c0afb94-5deb-4f79-a2d0-577ee8ed56cc> ; 
+  tb21:hasCorner <urn:uuid:578555d1-3b75-4beb-ad52-528ee4882ea6> ; 
+  tb21:hasCorner <urn:uuid:a119609a-2569-4b22-b02c-a3141659ad3c> ;
+  tb21:hasCorner <urn:uuid:de95c307-bcca-4d3f-9c17-c7a5bb1af264> ;
+  tb21:hasCorner <urn:uuid:e5deb5ec-e1a1-4867-87fa-dfe80c28771b> ;
+  rdfs:label "TB-21 Image #A" ;
+  tb21:hasCellPropertyType ex:RGB ;
+  cco:ont00001938 ex:regiona ; # represents
+.
+ex:RGB
+  a tb21:RangeType ;
+  tb21:hasDataRecord """
+  {
+    "name": "RGB Image",
+    "type": "DataRecord",
+    "fields": [
+        {
+            "label": "Blue",
+            "description": "Blue - 415-564 nm",
+            "type": "Count"
+        },
+        {
+            "label": "Green",
+            "description": "Green - 440-600 nm",
+            "type": "Count"
+        },
+        {
+            "label": "Red",
+            "description": "Red - 510-750 nm",
+            "type": "Count"
+        }
+    ]
+  }
+  """^^rdf:JSON ;
+.
+<urn:uuid:0c0afb94-5deb-4f79-a2d0-577ee8ed56cc>
+  a tb21:TAItimeStamp ; # TAI timestamp in ns
+  obo:OBI_0002135 2138486400000000000 ; # has specified value
+  rdfs:label "Timestamp: October 7th, 2025" ;
+.
+<urn:uuid:578555d1-3b75-4beb-ad52-528ee4882ea6>
+  a tb21:CCScoord ; 
+  tb21:hasRowNumber 0 ; 
+  tb21:hasColNumber 4095 ; 
+  rdfs:label "Image Coordinate 0" ;
+.
+<urn:uuid:a119609a-2569-4b22-b02c-a3141659ad3c>
+  a tb21:CCScoord ;
+  tb21:hasRowNumber 4095 ;
+  tb21:hasColNumber 0 ;
+  rdfs:label "Image Coordinate 1" ;
+.
+<urn:uuid:de95c307-bcca-4d3f-9c17-c7a5bb1af264>
+  a tb21:CCScoord ;
+  tb21:hasRowNumber 0 ;
+  tb21:hasColNumber 0 ;
+  rdfs:label "Image Coordinate 2" ;
+.
+<urn:uuid:e5deb5ec-e1a1-4867-87fa-dfe80c28771b>
+  a tb21:CCScoord ;
+  tb21:hasRowNumber 4095 ;
+  tb21:hasColNumber 4095 ;
+  rdfs:label "Image Coordinate 3" ;
+.
+ex:regiona
+  a tb21:RegionOfInterest ; 
+  geo:hasBoundingBox ex:enva ;
+  rdfs:label "Region of Interest A" ;
+  tb21:hasBoundary ex:bba ; 
+.
+ex:enva
+  a sf:Envelope ;
+  sf:maximum ex:bbmax ;
+  sf:minimum ex:bbmin ;
+  rdfs:label "Bounding Box A" ;
+.
+ex:bbmax
+  a sf:Point ; 
+  geo:hasSerialization "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> POINT(138.498668 -34.800998)"^^geo:wktLiteral ;
+  rdfs:label "position bbmax" ;
+  skos:exactMatch <urn:uuid:37831d74-ed17-4635-bd8d-6f32e0e7ed0b> ;
+.
+ex:bbmin
+  a sf:Point ;
+  geo:hasSerialization "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> POINT(138.494192 -34.804844)"^^geo:wktLiteral ;
+  rdfs:label "position bbmin" ;
+  skos:exactMatch <urn:uuid:c44e4b92-7317-411f-a10f-3cc1007aee90> ;
+.
+ex:bba
+  a tb21:RegionBoundary ; # subclass of Geospatial Polygon
+  tb21:hasVertex ex:bba_v0 ; 
+  tb21:hasVertex ex:bba_v1 ;
+  tb21:hasVertex ex:bba_v2 ;
+  tb21:hasVertex ex:bba_v3 ;
+  rdfs:comment """
+    'Boundary A' is a `continuant fiat boundary` (Geospatial_Polygon) that is a spatial part of the 'Region of Interest A'.
+    The individual vertices are `fiat points` (Geospatial Positions) <bba_v0>, <bba_v1>, <bba_v2>, <bba_v3>.
+    """ ;
+  rdfs:label "Boundary A" ;
+.
+ex:bba_v0
+  a cco:ont00000373 ; # Geospatial Position
+  geo:hasGeometry <urn:uuid:37831d74-ed17-4635-bd8d-6f32e0e7ed0b> ;
+  rdfs:label "Vertex 0" ;
+.
+ex:bba_v1
+  a cco:ont00000373 ;
+  geo:hasGeometry <urn:uuid:7b804fda-4ffe-4a55-bfe6-8ad777ae2701> ;
+  rdfs:label "Vertex 1" ;
+.
+ex:bba_v2
+  a cco:ont00000373 ;
+  geo:hasGeometry <urn:uuid:52bcf221-dbee-44b6-bafe-1833347a8091> ;
+  rdfs:label "Vertex 2" ;
+.
+ex:bba_v3
+  a cco:ont00000373 ;
+  geo:hasGeometry <urn:uuid:c44e4b92-7317-411f-a10f-3cc1007aee90> ;
+  rdfs:label "Vertex 3" ;
+.
+<urn:uuid:37831d74-ed17-4635-bd8d-6f32e0e7ed0b>
+  a sf:Point ; 
+  geo:hasSerialization "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> POINT(138.498668 -34.800998)"^^geo:wktLiteral ;
+  rdfs:label "Ground Coordinate 0" ;
+.
+<urn:uuid:52bcf221-dbee-44b6-bafe-1833347a8091>
+  a sf:Point ;
+  geo:hasSerialization "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> POINT(138.498669 -34.804844)"^^geo:wktLiteral ;
+  rdfs:label "Ground Coordinate 2" ;
+.
+<urn:uuid:7b804fda-4ffe-4a55-bfe6-8ad777ae2701>
+  a sf:Point ;
+  geo:hasSerialization "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> POINT(138.494192 -34.800998)"^^geo:wktLiteral ;
+  rdfs:label "Ground Coordinate 1" ;
+.
+<urn:uuid:c44e4b92-7317-411f-a10f-3cc1007aee90>
+  a sf:Point ;
+  geo:hasSerialization "<http://www.opengis.net/def/crs/OGC/1.3/CRS84> POINT(138.494192 -34.804844)"^^geo:wktLiteral ;
+  rdfs:label "Ground Coordinate 3" ;
+.
+<urn:uuid:e8fda175-9d70-4443-80b6-9c802957d13d>
+  a tb21:RasterBoundsCorrGroup ;
+  tb21:hasCorr <urn:uuid:b678cc64-b6c1-41f8-9e42-643a9c1cee1c> ;
+  tb21:hasCorr <urn:uuid:eae80fdf-9ab9-4846-b3e4-0e7ef6024a08> ;
+  tb21:hasCorr <urn:uuid:f0e1c5e7-ad14-4d18-8315-0cac9cf338c8> ;
+  tb21:hasCorr <urn:uuid:fc40444f-cacb-429b-8048-dce8eab80dae> ;
+  rdfs:label "Correspondence Group A" ;
+  cco:ont00001808 <urn:uuid:707985a2-6e1b-470a-b4c1-79dc1c16ec38> ;
+.
+<urn:uuid:eae80fdf-9ab9-4846-b3e4-0e7ef6024a08>
+  a tb21:CornerCorrespondence ;
+  tb21:hasCorrSource <urn:uuid:578555d1-3b75-4beb-ad52-528ee4882ea6> ;
+  tb21:hasCorrTarget <urn:uuid:37831d74-ed17-4635-bd8d-6f32e0e7ed0b> ;
+  rdfs:label "Correspondence 0" ;
+.
+<urn:uuid:fc40444f-cacb-429b-8048-dce8eab80dae>
+  a tb21:CornerCorrespondence ;
+  tb21:hasCorrSource <urn:uuid:a119609a-2569-4b22-b02c-a3141659ad3c> ;
+  tb21:hasCorrTarget <urn:uuid:7b804fda-4ffe-4a55-bfe6-8ad777ae2701> ;
+  rdfs:label "Correspondence 1" ;
+.
+<urn:uuid:f0e1c5e7-ad14-4d18-8315-0cac9cf338c8>
+  a tb21:CornerCorrespondence ;
+  tb21:hasCorrSource <urn:uuid:de95c307-bcca-4d3f-9c17-c7a5bb1af264> ;
+  tb21:hasCorrTarget <urn:uuid:52bcf221-dbee-44b6-bafe-1833347a8091> ;
+  rdfs:label "Correspondence 2" ;
+.
+<urn:uuid:b678cc64-b6c1-41f8-9e42-643a9c1cee1c>
+  a tb21:CornerCorrespondence ;
+  tb21:hasCorrSource <urn:uuid:e5deb5ec-e1a1-4867-87fa-dfe80c28771b> ;
+  tb21:hasCorrTarget <urn:uuid:c44e4b92-7317-411f-a10f-3cc1007aee90> ;
+  rdfs:label "Correspondence 3" ;
+.

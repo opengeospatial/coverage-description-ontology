@@ -1,0 +1,1828 @@
+# baseURI: http://www.opengis.net/ont/swe/
+# imports: http://purl.org/dc/elements/1.1/
+# imports: http://qudt.org/$$QUDT_VERSION$$/schema/qudt
+# imports: http://www.opengis.net/ont/geosparql#
+# imports: http://www.w3.org/2004/02/skos/core
+# prefix: swe
+
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix geosparql: <http://www.opengis.net/ont/geosparql#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix swe: <http://www.opengis.net/ont/swe/> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+swe:
+  a owl:Ontology ;
+  dcterms:created "2026-03-19"^^xsd:date ;
+  dcterms:creator <https://orcid.org/0000-0002-3884-3420> ;
+  dcterms:description "Explicit OWL2 implementation of SWE Common Record Object schema" ;
+  dcterms:isVersionOf <https://docs.ogc.org/is/24-014/24-014.html> ;
+  dcterms:modified "2026-03-19"^^xsd:date ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html"^^xsd:anyURI ;
+  dcterms:title "SWE Common Record Object Ontology" ;
+  rdfs:comment """This ontology is an attempt to directly translate the SWE Common Record Object schema. 
+  It is based on the JSON implementation of the UML model of the SWE Common Record Object schema, which is described in https://docs.ogc.org/is/24-014/24-014.html. 
+  The official JSON schema is available at https://schemas.opengis.net/sweCommon/3.0/json/ .
+  
+  Class and property names (local names) in the Ontology are intended to match JSON terms exactly. 
+
+For arrays, the ontology has max=* and the JSON-LD Context adds @list (ordered) or @set (unordered) as the value of the @container key. 
+See https://www.w3.org/TR/json-ld11/#sets-and-lists 
+
+  
+  The motivation here is so that the JSON-LD serialization of the OWL is as close as possible to the JSON Schema version.
+  The ontology was created manually.""" ;
+  owl:imports <http://purl.org/dc/elements/1.1/> ;
+  owl:imports <http://qudt.org/$$QUDT_VERSION$$/schema/qudt> ;
+  owl:imports geosparql: ;
+  owl:imports <http://www.w3.org/2004/02/skos/core> ;
+.
+swe:AbstractArray
+  a owl:Class ;
+  dcterms:source "https://schemas.opengis.net/sweCommon/3.0/json/DataArray.json" ;
+  rdfs:label "AbstractArray" ;
+  rdfs:subClassOf swe:AbstractDataComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AbstractDataComponent ;
+      owl:onProperty swe:elementType ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AbstractEncoding ;
+      owl:onProperty swe:encoding ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:ElementCount ;
+      owl:onProperty swe:elementCount ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:EncodedValues ;
+      owl:onProperty swe:values ;
+    ] ;
+  skos:definition " " ;
+.
+swe:AbstractDataComponent
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#_18f074eb-b7d6-ffcb-337d-3dd5b294c54e> ;
+  rdfs:label "AbstractDataComponent" ;
+  rdfs:subClassOf swe:AbstractSWEIdentifiable ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:ScopedName ;
+      owl:onProperty swe:definition ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:definition ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:optional ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:updatable ;
+    ] ;
+  skos:definition "Abstract base class for all data components" ;
+.
+swe:AbstractEncoding
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#json_values_block> ;
+  rdfs:label "AbstracEncoding" ;
+  rdfs:subClassOf swe:AbstractSWE ;
+  skos:definition "Inline values for “DataArray”, “Matrix” and “DataStream” components shall always be encoded using the JSON encoding rules when provided within a JSON document. No other method is allowed within a JSON document compliant with this standard. Inline block component values shall always be wrapped using a JSON Array." ;
+.
+swe:AbstractSWE
+  a owl:Class ;
+  dcterms:source "https://schemas.opengis.net/sweCommon/3.0/json/basicTypes.json" ;
+  rdfs:label "AbstractSWE" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:id ;
+    ] ;
+  skos:definition " " ;
+.
+swe:AbstractSWEIdentifiable
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#_18f074eb-b7d6-ffcb-337d-3dd5b294c54e> ;
+  rdfs:label "AbstractSWEIdentifiable" ;
+  rdfs:subClassOf swe:AbstractSWE ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:description ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:label ;
+    ] ;
+  skos:definition "Base substitution groups for all SWE Common objects with identification metadata" ;
+.
+swe:AbstractSimpleComponent
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#_18f074eb-b7d6-ffcb-337d-3dd5b294c54e> ;
+  rdfs:label "AbstractSimpleComponent" ;
+  rdfs:subClassOf swe:AbstractDataComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:NilValues ;
+      owl:onProperty swe:nilValues ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:string ;
+      owl:onProperty swe:axisID ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:axisID ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:nilValues ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:referenceFrame ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:referenceFrame ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+.
+swe:AllowedGeometries
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_geometry_class> ;
+  rdfs:label "AllowedGeometries" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:geomType ;
+    ] ;
+.
+swe:AllowedTimes
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#json_allowedtimes_obj> ;
+  rdfs:label "AllowedTimes" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:TimePair ;
+      owl:onProperty swe:interval ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:dateTime ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:positiveInteger ;
+      owl:onProperty swe:significantFigures ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:significantFigures ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:interval ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+  skos:definition "The “AllowedTimes” object is the JSON schema implementation of the “AllowedTimes” UML class defined in Clause 8.2.19. The schema for this class is provided in basicTypes.json (see #definitions/AllowedTimes)." ;
+.
+swe:AllowedTokens
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#json_allowedtokens_obj> ;
+  rdfs:label "AllowedTokens" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:string ;
+      owl:onProperty swe:pattern ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:string ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:pattern ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+  skos:definition "The “AllowedTokens” object is the JSON schema implementation of the “AllowedTokens” UML class defined in Clause 8.2.17. The schema for this class is provided in basicTypes.json (see #definitions/AllowedTokens)." ;
+.
+swe:AllowedValues
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#json_allowedvalues_obj> ;
+  rdfs:label "AllowedValues" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:Real ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:RealPair ;
+      owl:onProperty swe:interval ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:integer ;
+      owl:onProperty swe:significantFigures ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:significantFigures ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:interval ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "0"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+  skos:definition "The “AllowedValues” object is the JSON schema implementation of the “AllowedValues” UML class defined in Clause 8.2.18. The schema for this class is provided in basicTypes.json (see #definitions/AllowedValues)." ;
+.
+swe:AnyNumerical
+  a owl:Class ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#_b34a59af-d7b7-40a4-9e27-10c1eeb08bb1" ;
+  rdfs:label "AnyNumerical" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:Count ;
+      owl:onProperty swe:byCount ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:Quantity ;
+      owl:onProperty swe:byQuantity ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:Time ;
+      owl:onProperty swe:byTime ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:bySomething ;
+    ] ;
+  skos:definition "Instances of this class should take one of byCount, byQuantity, byTime, which are sub-properties of bySomething" ;
+.
+swe:AnyRange
+  a owl:Class ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#_b34a59af-d7b7-40a4-9e27-10c1eeb08bb1" ;
+  rdfs:label "AnyRange" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:CategoryRange ;
+      owl:onProperty swe:byCategoryRange ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:CountRange ;
+      owl:onProperty swe:byCountRange ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:QuantityRange ;
+      owl:onProperty swe:byQuantityRange ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:TimeRange ;
+      owl:onProperty swe:byTimeRange ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:bySomething ;
+    ] ;
+  skos:definition "Instances of this class should take one of byCountRange, byQuantityRange, byTimeRange, byCategoryRange, which are sub-properties of bySomething" ;
+.
+swe:AnyScalar
+  a owl:Class ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#_b34a59af-d7b7-40a4-9e27-10c1eeb08bb1" ;
+  rdfs:label "AnyScalar" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:bySomething ;
+    ] ;
+  skos:definition "Instances of this class should take one of byBoolean, byCount, byQuantity, byTime, byCategory, byText, which are sub-properties of bySomething" ;
+.
+swe:AssociationAttributeGroup
+  a owl:Class ;
+  dcterms:source "https://schemas.opengis.net/sweCommon/3.0/json/basicTypes.json" ;
+  rdfs:label "AssociationAttributeGroup" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:href ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:arcrole ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:role ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:title ;
+    ] ;
+  skos:definition "Association attributes" ;
+.
+swe:BinaryEncoding
+  a owl:Class ;
+  dcterms:source "https://schemas.opengis.net/sweCommon/3.0/json/encodings.json" ;
+  rdfs:label "BinaryEncoding" ;
+  rdfs:subClassOf swe:AbstractEncoding ;
+  skos:definition "Parameters of the binary encoding method" ;
+.
+swe:Boolean
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#json_boolean_obj> ;
+  rdfs:label "Boolean" ;
+  rdfs:subClassOf swe:AbstractSimpleComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:boolean ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+  skos:definition "The “Boolean” object is the JSON schema implementation of the “Boolean” UML class defined in Clause 8.2.4. The schema for this class is provided in Boolean.json." ;
+.
+swe:Category
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#json_category_obj> ;
+  rdfs:label "Category" ;
+  rdfs:subClassOf swe:AbstractSimpleComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AllowedTokens ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:string ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:codeSpace ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:nilValues ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+  skos:definition "The “Category” object is the JSON schema implementation of the “Category” UML class defined in Clause 8.2.6. The schema for this class is provided in Category.json." ;
+.
+swe:CategoryRange
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#json_categoryrange_obj> ;
+  rdfs:label "CategoryRange" ;
+  rdfs:subClassOf swe:AbstractSimpleComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AllowedTokens ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:TokenPair ;
+      owl:onProperty swe:valueObject ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:codeSpace ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:valueObject ;
+    ] ;
+  skos:definition "The “CategoryRange” object is the JSON schema implementation of the “CategoryRange” UML class defined in Clause 8.2.11. The schema for this class is provided in CategoryRange.json." ;
+.
+swe:Count
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#json_count_obj> ;
+  rdfs:label "Count" ;
+  rdfs:subClassOf swe:AbstractSimpleComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AllowedValues ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:integer ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+  skos:definition "The “Count” object is the JSON schema implementation of the “Count” UML class defined in Clause 8.2.7. The schema for this class is provided in Count.json." ;
+.
+swe:CountRange
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#json_countrange_obj> ;
+  rdfs:label "CountRange" ;
+  rdfs:subClassOf swe:AbstractSimpleComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AllowedValues ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:IntegerPair ;
+      owl:onProperty swe:valueObject ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:valueObject ;
+    ] ;
+  skos:definition "The “CountRange” object is the JSON schema implementation of the “CountRange” UML class defined in Clause 8.2.12. The schema for this class is provided in CountRange.json." ;
+.
+swe:DataArray
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#json_dataarray_obj> ;
+  rdfs:label "DataArray" ;
+  rdfs:subClassOf swe:AbstractArray ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:elementType ;
+    ] ;
+  skos:definition "The “DataArray” element is the JSON schema implementation of the “DataArray” UML class defined in Clause 8.5.1. The schema for this class is provided in DataArray.json." ;
+.
+swe:DataChoice
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_datachoice_class> ;
+  rdfs:label "DataChoice" ;
+  rdfs:subClassOf swe:AbstractDataComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AbstractDataComponent ;
+      owl:onProperty swe:item ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:Category ;
+      owl:onProperty swe:choiceValue ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:choiceValue ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "2"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:item ;
+    ] ;
+  skos:definition "The “DataChoice” class (also called Disjoint Union) is modeled on the definition of ‘Choice’ from ISO 11404. It is a composite component that allows for a choice of child components. By opposition to records that carry all their fields simultaneously, only one item at a time can be present in the data when wrapped in a “DataChoice”." ;
+.
+swe:DataRecord
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#json_record_components> ;
+  rdfs:label "DataRecord" ;
+  rdfs:subClassOf swe:AbstractDataComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AbstractDataComponent ;
+      owl:onProperty swe:field ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:field ;
+    ] ;
+  skos:definition "The “DataRecord” object is the JSON schema implementation of the “DataRecord” UML class defined in Clause 8.3.1. The schema for this class is provided in DataRecord.json." ;
+.
+swe:DataStream
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#json_datastream_obj> ;
+  rdfs:label "DataStream" ;
+  rdfs:subClassOf swe:AbstractSWEIdentifiable ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AbstractDataComponent ;
+      owl:onProperty swe:elementType ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AbstractEncoding ;
+      owl:onProperty swe:encoding ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:EncodedValues ;
+      owl:onProperty swe:values ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:elementType ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:encoding ;
+    ] ;
+  skos:definition "The “DataStream” object is the JSON schema implementation of the “DataStream” UML class defined in Clause 8.5.3. The schema for this class is provided in DataStream.json." ;
+.
+swe:ElementCount
+  a owl:Class ;
+  dcterms:source "https://schemas.opengis.net/sweCommon/3.0/json/basicTypes.json" ;
+  rdfs:label "ElementCount" ;
+  rdfs:subClassOf swe:AbstractSimpleComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AllowedValues ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:integer ;
+      owl:onProperty swe:value ;
+    ] ;
+  skos:definition " " ;
+.
+swe:EncodedValues
+  a owl:Class ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/basicTypes.json> ;
+  rdfs:label "EncodedValues" ;
+.
+swe:GeomType
+  a rdfs:Datatype ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_geometry_class> ;
+  rdfs:label "GeomType" ;
+  owl:oneOf (
+      "Point"
+      "LineString"
+      "Polygon"
+      "MultiPoint"
+      "MultiLineString"
+      "MultiPolygon"
+    ) ;
+.
+swe:Geometry
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_geometry_class> ;
+  rdfs:label "Geometry" ;
+  rdfs:subClassOf swe:AbstractDataComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom geosparql:Geometry ;
+      owl:onProperty swe:valueObject ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AllowedGeometries ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:srs ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:valueObject ;
+    ] ;
+.
+swe:IntegerPair
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_basic_types> ;
+  rdfs:label "IntegerPair" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:integer ;
+      owl:onProperty swe:item ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "2"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:item ;
+    ] ;
+.
+swe:JSONEncoding
+  a owl:Class ;
+  dcterms:source "https://schemas.opengis.net/sweCommon/3.0/json/encodings.json" ;
+  rdfs:label "JSONEncoding" ;
+  rdfs:subClassOf swe:AbstractEncoding ;
+  skos:definition "Parameters of the JSON encoding method" ;
+.
+swe:Matrix
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#json_matrix_obj> ;
+  rdfs:label "Matrix" ;
+  rdfs:subClassOf swe:AbstractArray ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:elementType ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:localFrame ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:referenceFrame ;
+    ] ;
+  skos:definition "The “Matrix” object is the JSON schema implementation of the “Matrix” UML class defined in Clause 8.5.2. The schema for this class is provided in Matrix.json." ;
+.
+swe:NameToken
+  a rdfs:Datatype ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/basicTypes.json> ;
+  rdfs:label "NameToken" ;
+  owl:equivalentClass [
+      a rdfs:Datatype ;
+      owl:onDatatype xsd:string ;
+      owl:withRestrictions (
+          [
+            xsd:pattern "^[A-Za-z][A-Za-z0-9_\\-]*$" ;
+          ]
+        ) ;
+    ] ;
+  skos:definition "String starting with a letter, can include - or _ but no spaces" ;
+.
+swe:NilValue
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_nilvalues_class> ;
+  rdfs:label "NilValue" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:reason ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+.
+swe:NilValueInteger
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_nilvalues_class> ;
+  rdfs:label "NilValueInteger" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:integer ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:reason ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+.
+swe:NilValueNumber
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_nilvalues_class> ;
+  rdfs:label "NilValueNumber" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:Real ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:reason ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+.
+swe:NilValueText
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_nilvalues_class> ;
+  rdfs:label "NilValueText" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:string ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:reason ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+.
+swe:NilValueTime
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_nilvalues_class> ;
+  rdfs:label "NilValueTime" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:dateTime ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:reason ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+.
+swe:NilValues
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#json_nilvalues_obj> ;
+  rdfs:label "NilValues" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:nilValue ;
+    ] ;
+  skos:definition "The “NilValues” object is the JSON schema implementation of the “NilValues” UML class defined in Clause 8.2.16. Schema patterns for this class are provided in basicTypes.json. Several sub-patterns are defined for the decimal, integer and text cases." ;
+.
+swe:NilValuesInteger
+  a owl:Class ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/basicTypes.json> ;
+  rdfs:label "NilValuesInteger" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:hasNilValueInteger ;
+    ] ;
+.
+swe:NilValuesNumber
+  a owl:Class ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/basicTypes.json> ;
+  rdfs:label "NilValuesNumber" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:hasNilValueNumber ;
+    ] ;
+.
+swe:NilValuesText
+  a owl:Class ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/basicTypes.json> ;
+  rdfs:label "NilValuesText" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:hasNilValueText ;
+    ] ;
+.
+swe:NilValuesTime
+  a owl:Class ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/basicTypes.json> ;
+  rdfs:label "NilValuesTime" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:hasNilValueTime ;
+    ] ;
+.
+swe:Quality
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_quality_union> ;
+  rdfs:label "Quality" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:bySomething ;
+    ] ;
+  skos:definition "Instances of this class should take one of byCategory, byQuantity, byQuantityRange, byText, which are sub-properties of bySomething" ;
+.
+swe:Quantity
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#json_quantity_obj> ;
+  rdfs:label "Quantity" ;
+  rdfs:subClassOf swe:AbstractSimpleComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AllowedValues ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:Real ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:uom ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+  skos:definition "The “Quantity” object is the JSON schema implementation of the “Quantity” UML class defined in Clause 8.2.8. The schema for this class is provided in Quantity.json." ;
+.
+swe:QuantityRange
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#json_quantityrange_obj> ;
+  rdfs:label "QuantityRange" ;
+  rdfs:subClassOf swe:AbstractSimpleComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AllowedValues ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:RealPair ;
+      owl:onProperty swe:valueObject ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:uom ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:valueObject ;
+    ] ;
+  skos:definition "The “QuantityRange” object is the JSON schema implementation of the “QuantityRange” UML class defined in Clause 8.2.13. The schema for this class is provided in QuantityRange.json." ;
+.
+swe:Real
+  a rdfs:Datatype ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#uml_basic_types" ;
+  rdfs:label "Real" ;
+  owl:equivalentClass [
+      a rdfs:Datatype ;
+      owl:unionOf (
+          xsd:decimal
+          xsd:double
+          xsd:float
+        ) ;
+    ] ;
+.
+swe:RealPair
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_basic_types> ;
+  rdfs:label "RealPair" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:Real ;
+      owl:onProperty swe:item ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "2"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:item ;
+    ] ;
+.
+swe:ScopedName
+  a owl:Class ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#uml_alldatacomponents" ;
+  rdfs:label "ScopedName" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:string ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:codeSpace ;
+    ] ;
+.
+swe:Text
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#json_text_obj> ;
+  rdfs:label "Text" ;
+  rdfs:subClassOf swe:AbstractSimpleComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AllowedTokens ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:string ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+  skos:definition "The “Text” object is the JSON schema implementation of the “Text” UML class defined in Clause 8.2.5. The schema for this class is provided in Text.json." ;
+.
+swe:TextEncoding
+  a owl:Class ;
+  dcterms:source "https://schemas.opengis.net/sweCommon/3.0/json/encodings.json" ;
+  rdfs:label "TextEncoding" ;
+  rdfs:subClassOf swe:AbstractEncoding ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:blockSeparator ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:tokenSeparator ;
+    ] ;
+  skos:definition "Parameters of the text encoding method" ;
+.
+swe:Time
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#json_time_obj> ;
+  rdfs:label "Time" ;
+  rdfs:subClassOf swe:AbstractSimpleComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AllowedTimes ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:dateTime ;
+      owl:onProperty swe:value ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:uom ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:hasTimePosition ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:localFrame ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:referenceTime ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:value ;
+    ] ;
+  skos:definition "The “Time” object is the JSON schema implementation of the “Time” UML class defined in Clause 8.2.9. The schema for this class is provided in Time.json." ;
+.
+swe:TimePair
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_basic_types> ;
+  rdfs:label "TimePair" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:dateTime ;
+      owl:onProperty swe:item ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "2"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:item ;
+    ] ;
+.
+swe:TimeRange
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#json_timerange_obj> ;
+  rdfs:label "TimeRange" ;
+  rdfs:subClassOf swe:AbstractSimpleComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AllowedTimes ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:TimePair ;
+      owl:onProperty swe:valueObject ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:dateTime ;
+      owl:onProperty swe:referenceTime ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:uom ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:constraint ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:localFrame ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:referenceTime ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:valueObject ;
+    ] ;
+  skos:definition "The “TimeRange” object is the JSON schema implementation of the “TimeRange” UML class defined in Clause 8.2.14. The schema for this class is provided in TimeRange.json." ;
+.
+swe:TokenPair
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_basic_types> ;
+  rdfs:label "TokenPair" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom xsd:string ;
+      owl:onProperty swe:item ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "2"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:item ;
+    ] ;
+.
+swe:UnitReference
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#json_unitreference_obj> ;
+  rdfs:label "UnitReference" ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:code ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:href ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:label ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:symbol ;
+    ] ;
+  skos:definition "The “UnitReference” object is the partial JSON schema implementation of the “UnitOfMeasure” UML class used in Clause 8.2.8 and Clause 8.2.13, and the “UomTime” UML class used in Clause 8.2.9 and Clause 8.2.14, as defining the model for “UnitOfMeasure” and “UomTime” are out of scope for SWE Common. SWE Common only references implementations of “UnitOfMeasure”, like for instance the ones provided by UCUM." ;
+.
+swe:Vector
+  a owl:Class ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_vector_class> ;
+  rdfs:label "Vector" ;
+  rdfs:subClassOf swe:AbstractDataComponent ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:allValuesFrom swe:AnyNumerical ;
+      owl:onProperty swe:coordinate ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:cardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:referenceFrame ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:maxCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:localFrame ;
+    ] ;
+  rdfs:subClassOf [
+      a owl:Restriction ;
+      owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+      owl:onProperty swe:coordinate ;
+    ] ;
+  skos:definition """The “Vector” class is used to express multi-dimensional quantities with respect to a well defined referenced frame (usually a spatial or spatio-temporal reference frame). This is done by projecting the quantity on one or several axes that define the reference frame and assigning a value to each of the axis projections.
+
+The “Vector” class is a special case of a record that takes a collection of coordinates that are restricted to a numerical representation. """ ;
+.
+swe:XMLEncoding
+  a owl:Class ;
+  dcterms:source "https://schemas.opengis.net/sweCommon/3.0/json/encodings.json" ;
+  rdfs:label "XMLEncoding" ;
+  rdfs:subClassOf swe:AbstractEncoding ;
+  skos:definition "Parameters of the XML encoding method" ;
+.
+swe:arcrole
+  a owl:DatatypeProperty ;
+  dcterms:source "https://schemas.opengis.net/sweCommon/3.0/json/basicTypes.json" ;
+  rdfs:domain swe:AssociationAttributeGroup ;
+  rdfs:label "arcrole" ;
+  rdfs:range xsd:anyURI ;
+  skos:definition "Association arcrole" ;
+.
+swe:axisID
+  a owl:DatatypeProperty ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/AbstractSimpleComponent.json> ;
+  rdfs:domain swe:AbstractSimpleComponent ;
+  rdfs:label "axisID" ;
+  rdfs:range xsd:string ;
+  skos:definition "Specifies the reference axis (refer to CRS axisID). The reference frame URI should also be specified unless it is inherited from parent Vector" ;
+.
+swe:blockSeparator
+  a owl:DatatypeProperty ;
+  dcterms:source "https://schemas.opengis.net/sweCommon/3.0/json/encodings.json" ;
+  rdfs:domain swe:TextEncoding ;
+  rdfs:label "blockSeparator" ;
+  rdfs:range xsd:string ;
+  skos:definition "Character sequence used as the block separator (i.e., between two successive blocks in the data set. The end of a block is reached once all values from the data tree have been encoded once)" ;
+.
+swe:byBoolean
+  a owl:ObjectProperty ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#_b34a59af-d7b7-40a4-9e27-10c1eeb08bb1" ;
+  rdfs:domain swe:AnyScalar ;
+  rdfs:label "byBoolean" ;
+  rdfs:range swe:Boolean ;
+  rdfs:subPropertyOf swe:bySomething ;
+.
+swe:byCategory
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_quality_union> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:Quality
+          swe:AnyScalar
+        ) ;
+    ] ;
+  rdfs:label "byCategory" ;
+  rdfs:range swe:Category ;
+  rdfs:subPropertyOf swe:bySomething ;
+.
+swe:byCategoryRange
+  a owl:ObjectProperty ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#_b34a59af-d7b7-40a4-9e27-10c1eeb08bb1" ;
+  rdfs:domain swe:AnyRange ;
+  rdfs:label "byCategoryRange" ;
+  rdfs:range swe:CategoryRange ;
+  rdfs:subPropertyOf swe:bySomething ;
+.
+swe:byCount
+  a owl:ObjectProperty ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#_b34a59af-d7b7-40a4-9e27-10c1eeb08bb1" ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:AnyScalar
+          swe:AnyNumerical
+        ) ;
+    ] ;
+  rdfs:label "byCount" ;
+  rdfs:range swe:Count ;
+  rdfs:subPropertyOf swe:bySomething ;
+.
+swe:byCountRange
+  a owl:ObjectProperty ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#_b34a59af-d7b7-40a4-9e27-10c1eeb08bb1" ;
+  rdfs:domain swe:AnyRange ;
+  rdfs:label "byCountRange" ;
+  rdfs:range swe:CountRange ;
+  rdfs:subPropertyOf swe:bySomething ;
+.
+swe:byQuantity
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_quality_union> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:Quality
+          swe:AnyScalar
+          swe:AnyNumerical
+        ) ;
+    ] ;
+  rdfs:label "byQuantity" ;
+  rdfs:range swe:Quantity ;
+  rdfs:subPropertyOf swe:bySomething ;
+.
+swe:byQuantityRange
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_quality_union> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:Quality
+          swe:AnyRange
+        ) ;
+    ] ;
+  rdfs:label "byQuantityRange" ;
+  rdfs:range swe:QuantityRange ;
+  rdfs:subPropertyOf swe:bySomething ;
+.
+swe:bySomething
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_quality_union> ;
+  rdfs:domain swe:Quality ;
+  rdfs:label "bySomething" ;
+  skos:definition "Abstract super-property of byCategory, byQuantity, byQuantityRange, byText etc" ;
+.
+swe:byText
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_quality_union> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:Quality
+          swe:AnyScalar
+        ) ;
+    ] ;
+  rdfs:label "byText" ;
+  rdfs:range swe:Text ;
+  rdfs:subPropertyOf swe:bySomething ;
+.
+swe:byTime
+  a owl:ObjectProperty ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#_b34a59af-d7b7-40a4-9e27-10c1eeb08bb1" ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:AnyScalar
+          swe:AnyNumerical
+        ) ;
+    ] ;
+  rdfs:label "byTime" ;
+  rdfs:range swe:Time ;
+  rdfs:subPropertyOf swe:bySomething ;
+.
+swe:byTimeRange
+  a owl:ObjectProperty ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#_b34a59af-d7b7-40a4-9e27-10c1eeb08bb1" ;
+  rdfs:domain swe:AnyRange ;
+  rdfs:label "byTimeRange" ;
+  rdfs:range swe:TimeRange ;
+  rdfs:subPropertyOf swe:bySomething ;
+.
+swe:byteEncoding
+  a owl:DatatypeProperty ;
+  dcterms:source "https://schemas.opengis.net/sweCommon/3.0/json/encodings.json" ;
+  rdfs:domain swe:BinaryEncoding ;
+  rdfs:label "byteEncoding" ;
+  rdfs:range [
+      a rdfs:Datatype ;
+      owl:oneOf (
+          "base64"
+          "raw"
+        ) ;
+    ] ;
+  skos:definition "Byte encoding method used to encode the binary data (raw or base 64)" ;
+.
+swe:byteLength
+  a owl:DatatypeProperty ;
+  dcterms:source "https://schemas.opengis.net/sweCommon/3.0/json/encodings.json" ;
+  rdfs:domain swe:BinaryEncoding ;
+  rdfs:label "byteLength" ;
+  rdfs:range xsd:integer ;
+  skos:definition "Total length in bytes of the binary stream (if known in advance)" ;
+.
+swe:byteOrder
+  a owl:DatatypeProperty ;
+  dcterms:source "https://schemas.opengis.net/sweCommon/3.0/json/encodings.json" ;
+  rdfs:domain swe:BinaryEncoding ;
+  rdfs:label "byteOrder" ;
+  rdfs:range [
+      a rdfs:Datatype ;
+      owl:oneOf (
+          "bigEndian"
+          "littleEndian"
+        ) ;
+    ] ;
+  skos:definition "Byte order convention used to encode this binary data (big endian = most significant byte first, MSB or little endian = least significant byte first, LSB)" ;
+.
+swe:choiceValue
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_datachoice_class> ;
+  rdfs:domain swe:DataChoice ;
+  rdfs:label "choiceValue" ;
+  rdfs:range swe:Category ;
+.
+swe:code
+  a owl:DatatypeProperty ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/basicTypes.json> ;
+  rdfs:label "code" ;
+  rdfs:range xsd:string ;
+  skos:definition "" ;
+.
+swe:codeSpace
+  a owl:ObjectProperty ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/Category.json> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:Category
+          swe:CategoryRange
+        ) ;
+    ] ;
+  rdfs:label "codeSpace" ;
+  skos:definition "Name of the dictionary where the possible values for this component are listed and defined" ;
+.
+swe:collapseWhiteSpaces
+  a owl:DatatypeProperty ;
+  dcterms:source "https://schemas.opengis.net/sweCommon/3.0/json/encodings.json" ;
+  rdfs:domain swe:TextEncoding ;
+  rdfs:label "collapseWhiteSpaces" ;
+  rdfs:range xsd:boolean ;
+  skos:definition "Indicates whether white spaces (i.e., space, tab, CR, LF) should be collapsed with separators when parsing the data stream" ;
+.
+swe:constraint
+  a owl:ObjectProperty ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/AbstractSimpleComponent.json> ;
+  rdfs:label "constraint" ;
+.
+swe:coordinate
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_record_components> ;
+  rdfs:domain swe:Vector ;
+  rdfs:label "coordinate" ;
+  rdfs:range swe:AnyNumerical ;
+.
+swe:decimalSeparator
+  a owl:DatatypeProperty ;
+  dcterms:source "https://schemas.opengis.net/sweCommon/3.0/json/encodings.json" ;
+  rdfs:domain swe:TextEncoding ;
+  rdfs:label "decimalSeparator" ;
+  rdfs:range xsd:string ;
+  skos:definition "Character used as the decimal separator" ;
+.
+swe:definition
+  a owl:ObjectProperty ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/AbstractDataComponent.json> ;
+  rdfs:label "definition" ;
+  skos:definition "The definition of the property whose value is provided by this component (semantic link)" ;
+.
+swe:description
+  a owl:AnnotationProperty ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#uml_alldatacomponents" ;
+  rdfs:label "description" ;
+  rdfs:range xsd:string ;
+  rdfs:subPropertyOf dcterms:description ;
+.
+swe:elementCount
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_dataarray_class> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:DataArray
+          swe:DataStream
+        ) ;
+    ] ;
+  rdfs:label "elementCount" ;
+  rdfs:range swe:Count ;
+.
+swe:elementType
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_dataarray_class> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:DataArray
+          swe:DataStream
+        ) ;
+    ] ;
+  rdfs:label "elementType" ;
+  rdfs:range swe:AbstractDataComponent ;
+.
+swe:encoding
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_dataarray_class> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:DataArray
+          swe:DataStream
+        ) ;
+    ] ;
+  rdfs:label "encoding" ;
+  rdfs:range swe:AbstractEncoding ;
+.
+swe:field
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_record_components> ;
+  rdfs:domain swe:DataRecord ;
+  rdfs:label "field" ;
+  rdfs:range swe:AbstractDataComponent ;
+.
+swe:geomType
+  a owl:DatatypeProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_geometry_class> ;
+  rdfs:domain swe:AllowedGeometries ;
+  rdfs:label "geomType" ;
+  rdfs:range swe:GeomType ;
+.
+swe:hasNilValueInteger
+  a owl:ObjectProperty ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/basicTypes.json> ;
+  rdfs:domain swe:NilValuesInteger ;
+  rdfs:label "hasNilValueInteger" ;
+  rdfs:range swe:NilValueInteger ;
+.
+swe:hasNilValueNumber
+  a owl:ObjectProperty ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/basicTypes.json> ;
+  rdfs:domain swe:NilValuesNumber ;
+  rdfs:label "hasNilValueNumber" ;
+  rdfs:range swe:NilValueNumber ;
+.
+swe:hasNilValueText
+  a owl:ObjectProperty ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/basicTypes.json> ;
+  rdfs:domain swe:NilValuesText ;
+  rdfs:label "hasNilValueText" ;
+  rdfs:range swe:NilValueText ;
+.
+swe:hasNilValueTime
+  a owl:ObjectProperty ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/basicTypes.json> ;
+  rdfs:domain swe:NilValuesTime ;
+  rdfs:label "hasNilValueTime" ;
+  rdfs:range swe:NilValueTime ;
+.
+swe:href
+  a owl:DatatypeProperty ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/basicTypes.json> ;
+  rdfs:label "href" ;
+  rdfs:range xsd:anyURI ;
+.
+swe:id
+  a owl:DatatypeProperty ;
+  dcterms:source "https://docs.ogc.org/is/24-014/24-014.html#uml_alldatacomponents" ;
+  rdfs:label "identifier" ;
+  rdfs:range xsd:string ;
+.
+swe:interval
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_allowedvalues_class> ;
+  rdfs:label "interval" ;
+.
+swe:item
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_datachoice_class> ;
+  rdfs:domain swe:DataChoice ;
+  rdfs:label "item" ;
+  rdfs:range swe:AbstractDataComponent ;
+.
+swe:label
+  a owl:AnnotationProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_alldatacomponents> ;
+  rdfs:label "label" ;
+  rdfs:range xsd:string ;
+  rdfs:subPropertyOf rdfs:label ;
+.
+swe:localFrame
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_time_class> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:Time
+          swe:TimeRange
+          swe:Vector
+          swe:Matrix
+        ) ;
+    ] ;
+  rdfs:label "localFrame" ;
+.
+swe:namespace
+  a owl:DatatypeProperty ;
+  dcterms:source "https://schemas.opengis.net/sweCommon/3.0/json/encodings.json" ;
+  rdfs:domain swe:XMLEncoding ;
+  rdfs:label "namespace" ;
+  rdfs:range xsd:anyURI ;
+  skos:definition "" ;
+.
+swe:nilValue
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_nilvalues_class> ;
+  rdfs:domain swe:NilValues ;
+  rdfs:label "nilValue" ;
+  rdfs:range swe:NilValue ;
+.
+swe:nilValues
+  a owl:ObjectProperty ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/Category.json> ;
+  rdfs:domain swe:AbstractSimpleComponent ;
+  rdfs:label "nilValues" ;
+  rdfs:range swe:NilValues ;
+  skos:definition "Defines reserved values with special meaning (e.g., missing, out-of-range, etc.)" ;
+.
+swe:optional
+  a owl:DatatypeProperty ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/AbstractDataComponent.json> ;
+  rdfs:domain swe:AbstractDataComponent ;
+  rdfs:label "optional" ;
+  rdfs:range xsd:boolean ;
+  skos:definition "Specifies if the data for this component can be omitted in the datastream" ;
+.
+swe:pattern
+  a owl:DatatypeProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_allowedtokens_class> ;
+  rdfs:domain swe:AllowedTokens ;
+  rdfs:label "pattern" ;
+  rdfs:range xsd:string ;
+.
+swe:quality
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_simplecomponents> ;
+  rdfs:domain swe:AbstractSimpleComponent ;
+  rdfs:label "quality" ;
+.
+swe:reason
+  a owl:DatatypeProperty ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/basicTypes.json> ;
+  rdfs:label "reason" ;
+  rdfs:range xsd:string ;
+  skos:definition "The reason for using the reserved value" ;
+.
+swe:recordsAsArrays
+  a owl:DatatypeProperty ;
+  dcterms:source "https://schemas.opengis.net/sweCommon/3.0/json/encodings.json" ;
+  rdfs:domain swe:JSONEncoding ;
+  rdfs:label "recordsAsArrays" ;
+  rdfs:range xsd:boolean ;
+  skos:definition "If true, DataRecord values are encoded as JSON arrays instead of JSON objects" ;
+.
+swe:referenceFrame
+  a owl:ObjectProperty ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/AbstractSimpleComponent.json> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:AbstractSimpleComponent
+          swe:Vector
+          swe:Matrix
+        ) ;
+    ] ;
+  rdfs:label "referenceFrame" ;
+  skos:definition "Frame of reference (usually temporal or spatial) with respect to which the value of the component is expressed. A reference frame anchors a value to a real world datum." ;
+.
+swe:referenceTime
+  a owl:DatatypeProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_time_class> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:Time
+          swe:TimeRange
+        ) ;
+    ] ;
+  rdfs:label "referenceTime" ;
+  rdfs:range xsd:dateTime ;
+.
+swe:role
+  a owl:DatatypeProperty ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/basicTypes.json> ;
+  rdfs:domain swe:AssociationAttributeGroup ;
+  rdfs:label "role" ;
+  rdfs:range xsd:anyURI ;
+  skos:definition "Association role" ;
+.
+swe:significantFigures
+  a owl:DatatypeProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_allowedvalues_class> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:AllowedValues
+          swe:AllowedTimes
+        ) ;
+    ] ;
+  rdfs:label "significantFigures" ;
+  rdfs:range xsd:positiveInteger ;
+.
+swe:srs
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_geometry_class> ;
+  rdfs:domain swe:Geometry ;
+  rdfs:label "srs" ;
+.
+swe:symbol
+  a owl:AnnotationProperty ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/basicTypes.json> ;
+  rdfs:label "symbol" ;
+  rdfs:range xsd:string ;
+  skos:definition "The preferred unit symbol to use when presenting the data in a UI (use the UCUM code instead if no symbol is provided)" ;
+.
+swe:title
+  a owl:DatatypeProperty ;
+  dcterms:source "https://schemas.opengis.net/sweCommon/3.0/json/basicTypes.json" ;
+  rdfs:domain swe:AssociationAttributeGroup ;
+  rdfs:label "title" ;
+  rdfs:range xsd:string ;
+  skos:definition "Association title" ;
+.
+swe:tokenSeparator
+  a owl:DatatypeProperty ;
+  dcterms:source "https://schemas.opengis.net/sweCommon/3.0/json/encodings.json" ;
+  rdfs:domain swe:TextEncoding ;
+  rdfs:label "tokenSeparator" ;
+  rdfs:range xsd:string ;
+  skos:definition "Character sequence used as the token separator (i.e., between two successive values)" ;
+.
+swe:uom
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_quantity_class> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:Quantity
+          swe:Time
+          swe:QuantityRange
+          swe:TimeRange
+        ) ;
+    ] ;
+  rdfs:label "uom" ;
+.
+swe:updatable
+  a owl:DatatypeProperty ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/AbstractDataComponent.json> ;
+  rdfs:domain swe:AbstractDataComponent ;
+  rdfs:label "updatable" ;
+  rdfs:range xsd:boolean ;
+  skos:definition "Specifies if the value of a data component can be updated externally (i.e., is variable)" ;
+.
+swe:value
+  a owl:DatatypeProperty ;
+  dcterms:source <https://schemas.opengis.net/sweCommon/3.0/json/AbstractSimpleComponent.json> ;
+  rdfs:label "value (literal)" ;
+  skos:definition "Inline value(s) for the component. This property is optional to enable structure to act as a schema for values provided separately (e.g., in a datastream)" ;
+.
+swe:valueObject
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_simple_components> ;
+  rdfs:label "value (object)" ;
+.
+swe:values
+  a owl:ObjectProperty ;
+  dcterms:source <https://docs.ogc.org/is/24-014/24-014.html#uml_dataarray_class> ;
+  rdfs:domain [
+      a owl:Class ;
+      owl:unionOf (
+          swe:DataArray
+          swe:DataStream
+        ) ;
+    ] ;
+  rdfs:label "values" ;
+  rdfs:range swe:EncodedValues ;
+  skos:note """JSON Schema 
+           \"values\": {
+              \"type\": \"array\",
+              \"minItems\": 1,
+              \"items\": {
+                \"type\": \"string\",
+                \"minLength\": 1
+              }
+            }
+
+JSON-LD Context
+{
+  \"@context\": {
+    \"@version\": 1.1,
+    \"values\": {
+      \"@id\": \"http://www.opengis.net/ont/swe/values\",
+      \"@container\": \"@list\"
+    }
+  }
+}""" ;
+.
+swe:vectorsAsArrays
+  a owl:DatatypeProperty ;
+  dcterms:source "https://schemas.opengis.net/sweCommon/3.0/json/encodings.json" ;
+  rdfs:domain swe:JSONEncoding ;
+  rdfs:label "vectorsAsArrays" ;
+  rdfs:range xsd:boolean ;
+  skos:definition "If true, Vector values are encoded as JSON arrays instead of JSON objects" ;
+.
