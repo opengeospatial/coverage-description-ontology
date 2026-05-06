@@ -19,7 +19,7 @@
     owl:imports <http://www.opengis.net/ont/tb21/region> ;
 #    owl:imports <http://www.opengis.net/ont/tb21/coord> ;
     dcterms:created "2026-04-02"^^xsd:date ;
-    dcterms:modified "2026-04-28"^^xsd:date ;
+    dcterms:modified "2026-05-05"^^xsd:date ;
     dcterms:creator <https://orcid.org/0000-0002-3884-3420> ;
     rdfs:comment """
     Components for OGC TB21 Metadata. 
