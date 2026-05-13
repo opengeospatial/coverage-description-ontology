@@ -312,7 +312,7 @@ tb21:RasterElGroundCorr
             rdfs:subClassOf tb21:RasterElCorrespondence ;
             rdfs:subClassOf [
                 rdf:type owl:Restriction ;
-                owl:onClass geo:Geometry ;
+                owl:onClass sf:Point ;
                 owl:onProperty tb21:hasCorrTarget ;
                 owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
                 ] ;

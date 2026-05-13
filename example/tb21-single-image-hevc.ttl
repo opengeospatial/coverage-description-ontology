@@ -118,22 +118,22 @@ ex:bba
   rdfs:label "Boundary A" ;
 .
 ex:bba_v0
-  a cco:ont00000373 ; # Geospatial Position
+  a tb21:Vertex ; 
   geo:hasGeometry <urn:uuid:37831d74-ed17-4635-bd8d-6f32e0e7ed0b> ;
   rdfs:label "Vertex 0" ;
 .
 ex:bba_v1
-  a cco:ont00000373 ;
+  a tb21:Vertex ;
   geo:hasGeometry <urn:uuid:7b804fda-4ffe-4a55-bfe6-8ad777ae2701> ;
   rdfs:label "Vertex 1" ;
 .
 ex:bba_v2
-  a cco:ont00000373 ;
+  a tb21:Vertex ;
   geo:hasGeometry <urn:uuid:52bcf221-dbee-44b6-bafe-1833347a8091> ;
   rdfs:label "Vertex 2" ;
 .
 ex:bba_v3
-  a cco:ont00000373 ;
+  a tb21:Vertex ;
   geo:hasGeometry <urn:uuid:c44e4b92-7317-411f-a10f-3cc1007aee90> ;
   rdfs:label "Vertex 3" ;
 .

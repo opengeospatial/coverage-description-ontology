@@ -42,7 +42,7 @@ tb21:hasVertex
            rdfs:subPropertyOf cco:ont00001909 ;
            owl:inverseOf tb21:isVertexOf ;
            rdfs:domain obo:BFO_0000140 ;
-           rdfs:range obo:BFO_0000147 ;
+           rdfs:range tb21:Vertex ;
            rdfs:label "has vertex"@en ;
            skos:definition "x has_vertex y iff x, has_tangential_part y, and y is a fiat_point" ;
            cco:ont00001760 <http://www.opengis.net/ont/tb21/region> .
@@ -52,7 +52,7 @@ tb21:hasVertex
 tb21:isVertexOf
 					 rdf:type owl:ObjectProperty ;
            rdfs:subPropertyOf cco:ont00001796 ;
-           rdfs:domain obo:BFO_0000147 ;
+           rdfs:domain tb21:Vertex ;
            rdfs:range obo:BFO_0000140 ;
            rdfs:label "is vertex of"@en ;
            skos:definition "x is_vertex_of y iff y, has_tangential_part x, and x is a fiat_point" ;
@@ -142,6 +142,25 @@ tb21:RegionBoundary
   rdfs:label "region boundary"@en ;
   skos:definition "fiat boundary that delimits a region of interest, minimum of two vertices"@en ;
   cco:ont00001760 <http://www.opengis.net/ont/tb21/region> .
+
+
+###  http://www.opengis.net/ont/tb21/Vertex
+tb21:Vertex
+					rdf:type owl:Class ;
+          rdfs:subClassOf obo:BFO_0000147 ;
+          rdfs:label "vertex"@en ;
+          rdfs:subClassOf [
+                rdf:type owl:Restriction ;
+                owl:someValuesFrom sf:Point ;
+                owl:onProperty geo:hasGeometry ;
+          ] ;
+          rdfs:subClassOf [
+                rdf:type owl:Restriction ;
+                owl:allValuesFrom obo:BFO_0000140 ;
+                owl:onProperty tb21:isVertexOf ;
+          ] ;
+          skos:definition """fiat point that is part of a continuant fiat boundary"""@en ;
+          cco:ont00001760 <http://www.opengis.net/ont/tb21/region> .
 
 
 #################################################################
