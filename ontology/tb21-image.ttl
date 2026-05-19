@@ -17,7 +17,7 @@
     dcterms:title "Image cell-properties"@en ;
     dcterms:description "Extension to Common Core Ontologies adding Image cell-properties utilising SWE Common Data Record"@en ;
     owl:imports <http://www.opengis.net/ont/tb21/region> ;
-#    owl:imports <http://www.opengis.net/ont/tb21/coord> ;
+    owl:imports <https://www.commoncoreontologies.org/InformationEntityOntology> ;
     dcterms:created "2026-04-02"^^xsd:date ;
     dcterms:modified "2026-05-05"^^xsd:date ;
     dcterms:creator <https://orcid.org/0000-0002-3884-3420> ;
@@ -88,7 +88,7 @@ tb21:hasICEpart
              rdfs:range cco:ont00000958 ;
              rdfs:label "has information content entity part" ;
              skos:definition "x has information content entity part y when x is an information content entity and y is an information content entity that is always a part of x" ;
-            cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
 
 
 ###  http://www.opengis.net/ont/tb21/hasCorr
@@ -196,6 +196,7 @@ tb21:hasDataRecord
              rdfs:label "has DataRecord"@en ;
              cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
 
+
 #################################################################
 #    Classes
 #################################################################
@@ -211,7 +212,7 @@ tb21:Image
             rdfs:label "Image (of a region)"@en ;
             skos:definition "gridded coverage whose attribute values are a numerical representation of a physical parameter"@en ;   
             dcterms:source <https://isotc211.geolexica.org/concepts/551/> , <https://isotc211.geolexica.org/concepts/793/> ;
-            .
+            cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
 
 ###  http://www.opengis.net/ont/tb21/TAItimeStamp
 tb21:TAItimeStamp
@@ -280,32 +281,67 @@ We don't define coordinate as in one of the things in a tuple, because such a th
 ###  http://www.opengis.net/ont/tb21/RasterCoord
 tb21:RasterCoord
 						 rdf:type owl:Class ;
-             rdfs:subClassOf tb21:Coord ,
-                            #  [ rdf:type owl:Restriction ;
-                            #    owl:onProperty cco:ont00001912 ;
-                            #    owl:someValuesFrom tb21:RasterCRS
-                            #  ] ,
-                            #  [ rdf:type owl:Restriction ;
-                            #    owl:onProperty cco:ont00001912 ;
-                            #    owl:hasValue tb21:CCS
-                            #  ] ,
-                             [ rdf:type owl:Restriction ;
-                               owl:onProperty tb21:hasXvalue ;
-                               owl:cardinality "1"^^xsd:nonNegativeInteger
+             rdfs:subClassOf tb21:Coord ;
+             rdfs:subClassOf [ rdf:type owl:Restriction ;
+                               owl:onProperty cco:ont00001912 ;
+                               owl:someValuesFrom tb21:RasterCRS
                              ] ,
                              [ rdf:type owl:Restriction ;
-                               owl:onProperty tb21:hasYvalue ;
-                               owl:cardinality "1"^^xsd:nonNegativeInteger
-                             ] ,
-                             [ rdf:type owl:Restriction ;
-                               owl:onProperty tb21:hasZvalue ;
-                               owl:maxCardinality "0"^^xsd:nonNegativeInteger
+                               owl:onProperty cco:ont00001912 ;
+                               owl:hasValue tb21:CCS
                              ] ;
+            #  rdfs:subClassOf [ rdf:type owl:Restriction ;
+            #                    owl:onProperty tb21:hasXvalue ;
+            #                    owl:cardinality "1"^^xsd:nonNegativeInteger
+            #                  ] ,
+            #                  [ rdf:type owl:Restriction ;
+            #                    owl:onProperty tb21:hasYvalue ;
+            #                    owl:cardinality "1"^^xsd:nonNegativeInteger
+            #                  ] ,
+            #                  [ rdf:type owl:Restriction ;
+            #                    owl:onProperty tb21:hasZvalue ;
+            #                    owl:maxCardinality "0"^^xsd:nonNegativeInteger
+            #                  ] ;
              rdfs:label "raster coordinate"@en ;
              skos:definition "coordinate of a value in a raster" ;
              cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
 
+###  http://www.opengis.net/ont/tb21/CCScoord
+tb21:CCScoord
+						 rdf:type owl:Class ;
+             rdfs:subClassOf tb21:RasterCoord ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty cco:ont00001912 ;
+                               owl:hasValue tb21:CCS
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty tb21:hasRowNumber ;
+                               owl:cardinality "1"^^xsd:nonNegativeInteger
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty tb21:hasColNumber ;
+                               owl:cardinality "1"^^xsd:nonNegativeInteger
+                             ] ;
+             rdfs:label "CCS coordinate"@en ;
+             skos:definition "a raster coordinate that is 0 based, with origin at the top left, x along rows to the right and y downwards along columns" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
 
+###  http://www.opengis.net/ont/tb21/CRS
+tb21:CRS
+						 rdf:type owl:Class ;
+             rdfs:subClassOf cco:ont00000965 ;
+             rdfs:label "Coordinate Reference System"@en ;
+             skos:definition "A prescriptive information content entity that prescribes coordinates to parts of some entity" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+            
+###  http://www.opengis.net/ont/tb21/RasterCRS
+tb21:RasterCRS
+						 rdf:type owl:Class ;
+             rdfs:subClassOf tb21:CRS ;
+             rdfs:label "raster image coordinate reference system"@en ;
+             skos:definition "a coordinate reference system that prescribes coordinates of elements of of a two dimensional raster structure" ;
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
+           
 ###  http://www.opengis.net/ont/tb21/RasterElGroundCorr
 tb21:RasterElGroundCorr
 						 rdf:type owl:Class ;
@@ -354,28 +390,6 @@ tb21:RasterElCorrespondence
              cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
 
 
-###  http://www.opengis.net/ont/tb21/CCScoord
-tb21:CCScoord
-						 rdf:type owl:Class ;
-             rdfs:subClassOf tb21:RasterCoord ,
-                            #  [ rdf:type owl:Restriction ;
-                            #    owl:onProperty cco:ont00001912 ;
-                            #    owl:hasValue tb21:CCS
-                            #  ] ,
-                             [ rdf:type owl:Restriction ;
-                               owl:onProperty tb21:hasRowNumber ;
-                               owl:someValuesFrom xsd:integer
-                             ] ,
-                             [ rdf:type owl:Restriction ;
-                               owl:onProperty tb21:hasColNumber ;
-                               owl:someValuesFrom xsd:integer
-                             ] ;
-             rdfs:label "CCS coordinate"@en ;
-             skos:definition "a raster coordinate that is 0 based, with origin at the top left, x along rows to the right and y downwards along columns" ;
-             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
-
-
-
 ###  http://www.opengis.net/ont/tb21/RangeType
 tb21:RangeType
 					rdf:type owl:Class ;
@@ -404,5 +418,4 @@ tb21:CCS
                            "NITF common coordinate system" ;
              skos:definition "A raster coordinate reference system which designates a raster element by it's row and column, with the origin 0,0 at the top left corner of the top left pixel and the centers of the pixels at .5, with columns starting left to right and rows starting top to bottom" ;
              owl:sameAs <https://www.opengis.net/def/crs/OGC/0/Index2D> ;
-.
-
+             cco:ont00001760 <http://www.opengis.net/ont/tb21/image> .
