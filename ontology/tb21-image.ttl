@@ -19,13 +19,13 @@
     owl:imports <http://www.opengis.net/ont/tb21/region> ;
     owl:imports <https://www.commoncoreontologies.org/InformationEntityOntology> ;
     dcterms:created "2026-04-02"^^xsd:date ;
-    dcterms:modified "2026-05-05"^^xsd:date ;
+    dcterms:modified "2026-05-19"^^xsd:date ;
     dcterms:creator <https://orcid.org/0000-0002-3884-3420> ;
     rdfs:comment """
     Components for OGC TB21 Metadata. 
 
-    This file is an example ontology artifact prepared solely for OGC Testbed 21 reporting and demonstration activities. 
-    It is based on a point in time developmental ontology slim and is not an official NGA, GMSB, or IDO ontology release. 
+    This file contains an example ontology artifact prepared solely for OGC Testbed 21 reporting and demonstration activities. 
+    It is based on a point in time developmental ontology 'slim' and is not an official NGA, GMSB, or IDO ontology release. 
     The IRIs, labels, definitions, axioms, and module structure in this file should not be treated as authoritative, stable, reusable, or suitable for incorporation into OGC baseline standards, operational systems, or future testbed activities. 
     
     Future work should reference officially published GMSB IDO releases when they become available.
@@ -152,7 +152,7 @@ tb21:hasCorner
 
 ###  http://www.opengis.net/ont/tb21/hasCellPropertyType
 tb21:hasCellPropertyType
-						 rdf:type owl:ObjectProperty ;
+					 rdf:type owl:ObjectProperty ;
            rdfs:subPropertyOf cco:ont00001920 ;
            rdfs:domain tb21:Image ;
            rdfs:range tb21:RangeType ;
